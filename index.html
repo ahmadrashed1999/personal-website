@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmad Albarghash - Developer Portfolio</title>
+    <meta name="description"
+        content="Ahmad Albarghash - Software Engineer & Full-Stack Developer specializing in Flutter, Web Development, AI Integration, and n8n Workflow Automation">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -21,10 +26,93 @@
             --accent-color: #06b6d4;
             --dark-bg: #0f172a;
             --darker-bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.8);
             --text-light: #e2e8f0;
             --text-muted: #94a3b8;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        /* Light Theme */
+        body.light-theme {
+            --dark-bg: #f8fafc;
+            --darker-bg: #e2e8f0;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-light: #1e293b;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .bg-animation::before {
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+
+        body.light-theme .particle {
+            background: rgba(99, 102, 241, 0.3);
+        }
+
+        body.light-theme nav {
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        body.light-theme .preloader {
+            background: var(--darker-bg);
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-content {
+            text-align: center;
+        }
+
+        .preloader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .preloader-text {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         body {
@@ -34,7 +122,45 @@
             line-height: 1.6;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease;
+            cursor: default;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(1.5);
+            border-color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+
+            .cursor,
+            .cursor-dot {
+                display: none;
+            }
         }
 
         body[dir="rtl"] {
@@ -76,7 +202,7 @@
             text-align: right;
         }
 
-        body[dir="rtl"] .contact-item > div:last-child {
+        body[dir="rtl"] .contact-item>div:last-child {
             flex: 1;
             text-align: right;
         }
@@ -128,7 +254,7 @@
             text-align: right;
         }
 
-        body[dir="rtl"] .contact-item > div {
+        body[dir="rtl"] .contact-item>div {
             text-align: right;
         }
 
@@ -168,7 +294,7 @@
         }
 
         body[dir="rtl"] .contact-content {
-            grid-template-columns: 1fr 1fr;
+            justify-content: center;
         }
 
         body[dir="rtl"] .about-content {
@@ -207,6 +333,7 @@
             height: 100%;
             z-index: -1;
             background: linear-gradient(45deg, var(--dark-bg), var(--darker-bg));
+            overflow: hidden;
         }
 
         .bg-animation::before {
@@ -217,15 +344,94 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
             animation: float 20s ease-in-out infinite;
         }
 
+        /* Particle System */
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particle-float linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            33% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+
+            66% {
+                transform: translateY(10px) rotate(-1deg);
+            }
+        }
+
+        /* Page Transitions */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            z-index: 9998;
+            transform: scaleY(0);
+            transform-origin: bottom;
+        }
+
+        /* Skip to content - Accessibility */
+        .skip-to-content {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            z-index: 10001;
+            border-radius: 0 0 10px 10px;
+            transition: top 0.3s ease;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
         }
 
         /* Navigation */
@@ -239,6 +445,11 @@
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
             transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.7rem 2rem;
+            background: rgba(15, 23, 42, 0.95);
         }
 
         .nav-container {
@@ -259,6 +470,12 @@
             letter-spacing: 2px;
         }
 
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
         .mobile-menu-toggle {
             display: none;
             background: transparent;
@@ -267,8 +484,14 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: transform 0.3s ease;
         }
 
+        .mobile-menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle,
         .language-switcher {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -284,14 +507,21 @@
             backdrop-filter: blur(10px);
         }
 
+        .theme-toggle:hover,
         .language-switcher:hover {
             background: rgba(99, 102, 241, 0.2);
             border-color: var(--primary-color);
             transform: translateY(-2px);
         }
 
+        .theme-toggle i,
         .language-switcher i {
             font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
         }
 
         .nav-links {
@@ -306,12 +536,13 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
@@ -319,16 +550,20 @@
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
+        .nav-links a:hover,
         .nav-links a.active {
             color: var(--accent-color);
         }
 
-        .nav-links a.active::after {
-            width: 100%;
+        .nav-links a:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
         /* Hero Section */
@@ -343,25 +578,54 @@
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             z-index: 2;
         }
 
-        .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-light), var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
             animation: slideUp 1s ease-out;
         }
 
+        .hero-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-color) 50%, var(--accent-color) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 1s ease-out, gradient-shift 5s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: slideUp 1s ease-out 0.2s both;
         }
 
@@ -370,8 +634,26 @@
             color: var(--accent-color);
             font-weight: 600;
             margin-bottom: 2rem;
-            min-height: 2rem;
+            min-height: 2.5rem;
             animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
         }
 
         .cta-buttons {
@@ -392,7 +674,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1rem;
         }
 
@@ -434,36 +718,147 @@
             background: rgba(99, 102, 241, 0.1);
         }
 
+        .btn:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 4px;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-indicator-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator-arrow a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .scroll-indicator-arrow a:hover {
+            color: var(--accent-color);
+        }
+
+        .scroll-indicator-arrow i {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
         /* Sections */
         .section {
-            padding: 5rem 2rem;
+            padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--text-light), var(--primary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            position: relative;
-            padding-bottom: 1rem;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .section-divider {
+            position: relative;
             width: 80px;
             height: 4px;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            margin: 0 auto 3rem;
             border-radius: 2px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .section-divider::before {
+            left: -15px;
+        }
+
+        .section-divider::after {
+            right: -15px;
+        }
+
+        /* Wave Divider */
+        .wave-divider {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+        }
+
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wave-divider path {
+            fill: var(--glass-bg);
         }
 
         /* About Section */
@@ -487,19 +882,35 @@
             transition: transform 0.3s ease;
         }
 
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+            border-radius: 25px;
+            z-index: -1;
+            animation: rotate-border 3s linear infinite;
+        }
+
+        @keyframes rotate-border {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         .about-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .about-image:hover {
-            transform: scale(1.05);
+            transition: transform 0.5s ease;
         }
 
         .about-image:hover img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .about-text {
@@ -514,6 +925,7 @@
         .about-text:hover {
             border-color: var(--primary-color);
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+            transform: translateY(-5px);
         }
 
         .about-text h3 {
@@ -530,8 +942,35 @@
             font-size: 1.05rem;
         }
 
-        .about-text p:last-child {
-            margin-bottom: 0;
+        .about-text p:last-of-type {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         /* Skills Section */
@@ -549,10 +988,12 @@
             border-radius: 20px;
             padding: 2rem;
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .skill-category:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotateX(5deg);
             border-color: var(--primary-color);
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
         }
@@ -590,7 +1031,8 @@
             height: 100%;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border-radius: 10px;
-            transition: width 2s ease;
+            width: 0;
+            transition: width 1.5s ease;
         }
 
         /* Services Section */
@@ -608,20 +1050,10 @@
             border-radius: 20px;
             padding: 2.5rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-        }
-
-        .service-card h3 {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            line-height: 1.8;
+            transform-style: preserve-3d;
         }
 
         .service-card::before {
@@ -640,8 +1072,20 @@
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
             border-color: var(--primary-color);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .service-card h3 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
         }
 
         .service-icon {
@@ -655,16 +1099,44 @@
             margin: 0 auto 1.5rem;
             font-size: 2.5rem;
             color: white;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
         }
 
         .service-card:hover .service-icon {
-            transform: rotate(5deg) scale(1.1);
+            transform: rotate(10deg) scale(1.1);
             box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+            border-radius: 50%;
         }
 
         /* Portfolio Section */
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -678,13 +1150,22 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .portfolio-item.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            position: absolute;
+            pointer-events: none;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
         .portfolio-image {
@@ -697,14 +1178,30 @@
             font-size: 4rem;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .portfolio-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-image img.skeleton {
+            background: linear-gradient(90deg, var(--glass-bg) 25%, var(--glass-border) 50%, var(--glass-bg) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .portfolio-image i {
@@ -714,10 +1211,6 @@
 
         .portfolio-item:hover .portfolio-image img {
             transform: scale(1.1);
-        }
-
-        .portfolio-item:hover .portfolio-image i {
-            transform: scale(1.2) rotate(5deg);
         }
 
         .portfolio-image-overlay {
@@ -735,31 +1228,38 @@
             z-index: 1;
         }
 
-        .portfolio-image-overlay[style*="display: flex"] {
-            opacity: 1 !important;
-        }
-
         .portfolio-item:hover .portfolio-image-overlay {
             opacity: 1;
         }
 
-        .portfolio-image img[style*="display: none"] ~ .portfolio-image-overlay {
-            display: flex !important;
-            opacity: 1 !important;
+        .portfolio-overlay-content {
+            text-align: center;
+            color: white;
         }
 
-        .portfolio-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            text-decoration: none;
+        .portfolio-overlay-content i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
         }
 
         .portfolio-content {
             padding: 2rem;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-color);
         }
 
         .portfolio-content h3 {
@@ -792,7 +1292,6 @@
             font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            margin-top: 0.5rem;
         }
 
         .portfolio-link-btn:hover {
@@ -800,15 +1299,75 @@
             box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
         }
 
-        .portfolio-link-btn i {
-            font-size: 0.8rem;
+        /* Portfolio Modal/Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-info {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .lightbox-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .lightbox-info p {
+            color: var(--text-muted);
         }
 
         /* Contact Section */
         .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            display: flex;
+            justify-content: center;
             margin-top: 2rem;
         }
 
@@ -817,13 +1376,17 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2.5rem;
+            padding: 3rem;
             transition: all 0.3s ease;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
         }
 
         .contact-info:hover {
             border-color: var(--primary-color);
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+            transform: translateY(-5px);
         }
 
         .contact-info h3 {
@@ -832,32 +1395,9 @@
             font-size: 1.5rem;
         }
 
-        .contact-info h4 {
-            color: var(--text-light);
-            margin-bottom: 0.3rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-info p {
+        .contact-info>p {
             color: var(--text-muted);
-            margin: 0;
-        }
-
-        .contact-item a {
-            color: var(--accent-color);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .contact-item a:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
-            transform: translateX(3px);
-        }
-
-        body[dir="rtl"] .contact-item a:hover {
-            transform: translateX(-3px);
+            margin-bottom: 2rem;
         }
 
         .contact-item {
@@ -865,6 +1405,12 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .contact-items-wrapper {
+            display: inline-block;
+            text-align: left;
         }
 
         .contact-icon {
@@ -885,8 +1431,31 @@
             transform: scale(1.1) rotate(5deg);
         }
 
+        .contact-item h4 {
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .contact-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
         .social-links {
             display: flex;
+            justify-content: center;
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -908,16 +1477,139 @@
 
         .social-link:hover {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-5px) rotate(5deg) scale(1.1);
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
         }
 
-        .social-link i {
-            transition: transform 0.3s ease;
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
         }
 
-        .social-link:hover i {
-            transform: scale(1.2);
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-copyright a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.1s ease;
         }
 
         /* Animations */
@@ -926,6 +1618,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -939,6 +1632,46 @@
         }
 
         .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger animation for children */
+        .stagger-children>* {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .stagger-children.visible>*:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-children.visible>*:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-children.visible>*:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .stagger-children.visible>*:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .stagger-children.visible>*:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        .stagger-children.visible>*:nth-child(6) {
+            transition-delay: 0.6s;
+        }
+
+        .stagger-children.visible>*:nth-child(7) {
+            transition-delay: 0.7s;
+        }
+
+        .stagger-children.visible>* {
             opacity: 1;
             transform: translateY(0);
         }
@@ -960,7 +1693,7 @@
                 flex-direction: column;
                 padding: 2rem;
                 transition: left 0.3s ease;
-                gap: 1rem;
+                gap: 0;
             }
 
             .nav-links.active {
@@ -969,6 +1702,38 @@
 
             .nav-links li {
                 width: 100%;
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links.active li:nth-child(2) {
+                transition-delay: 0.15s;
+            }
+
+            .nav-links.active li:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links.active li:nth-child(4) {
+                transition-delay: 0.25s;
+            }
+
+            .nav-links.active li:nth-child(5) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links.active li:nth-child(6) {
+                transition-delay: 0.35s;
             }
 
             .nav-links a {
@@ -976,6 +1741,11 @@
                 padding: 1rem;
                 border-radius: 10px;
                 text-align: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .nav-links a:hover {
+                background: rgba(99, 102, 241, 0.2);
             }
 
             .about-content {
@@ -983,8 +1753,8 @@
                 text-align: center;
             }
 
-            .contact-content {
-                grid-template-columns: 1fr;
+            .about-stats {
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .cta-buttons {
@@ -992,14 +1762,8 @@
                 align-items: center;
             }
 
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .skills-grid,
+            .services-grid,
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
@@ -1011,583 +1775,908 @@
             nav {
                 padding: 1rem;
             }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
         }
 
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: 1001;
-        }
+        @media (max-width: 480px) {
+            .nav-controls {
+                gap: 0.5rem;
+            }
 
-        .scroll-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            width: 0%;
-            transition: width 0.1s ease;
+            .theme-toggle span,
+            .language-switcher span {
+                display: none;
+            }
+
+            .theme-toggle,
+            .language-switcher {
+                padding: 0.5rem;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                justify-content: center;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .portfolio-filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="bg-animation"></div>
-    
-    <!-- Scroll Indicator -->
+    <!-- Skip to Content - Accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-spinner"></div>
+            <div class="preloader-text">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="particles-container" id="particles"></div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator">
-        <div class="scroll-progress"></div>
+        <div class="scroll-progress" id="scroll-progress"></div>
     </div>
 
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="logo">AHMAD</div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                    <span id="theme-text">Dark</span>
+                </button>
                 <button class="language-switcher" id="language-switcher" aria-label="Switch language">
                     <i class="fas fa-language"></i>
                     <span id="lang-text">EN</span>
                 </button>
-                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"
+                    aria-expanded="false">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home" data-en="Home" data-ar="الرئيسية">Home</a></li>
-                <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
-                <li><a href="#skills" data-en="Skills" data-ar="المهارات">Skills</a></li>
-                <li><a href="#services" data-en="Services" data-ar="الخدمات">Services</a></li>
-                <li><a href="#portfolio" data-en="Portfolio" data-ar="الأعمال">Portfolio</a></li>
-                <li><a href="#contact" data-en="Contact" data-ar="اتصل بي">Contact</a></li>
+            <ul class="nav-links" id="nav-links" role="menubar">
+                <li role="none"><a href="#home" role="menuitem" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                <li role="none"><a href="#about" role="menuitem" data-en="About" data-ar="عني">About</a></li>
+                <li role="none"><a href="#skills" role="menuitem" data-en="Skills" data-ar="المهارات">Skills</a></li>
+                <li role="none"><a href="#services" role="menuitem" data-en="Services" data-ar="الخدمات">Services</a>
+                </li>
+                <li role="none"><a href="#portfolio" role="menuitem" data-en="Portfolio" data-ar="الأعمال">Portfolio</a>
+                </li>
+                <li role="none"><a href="#contact" role="menuitem" data-en="Contact" data-ar="اتصل بي">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Ahmad Albarghash</h1>
-            <p class="hero-subtitle" data-en="Software Engineer & Developer" data-ar="مهندس برمجيات ومطور">Software Engineer & Developer</p>
-            <div class="typing-text" id="typing-text"></div>
-            <div class="cta-buttons">
-                <a href="#portfolio" class="btn btn-primary" data-en="View My Work" data-ar="شاهد أعمالي">View My Work</a>
-                <a href="#contact" class="btn btn-secondary" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section fade-in">
-        <h2 class="section-title" data-en="About Me" data-ar="عني">About Me</h2>
-        <div class="about-content">
-            <div class="about-image">
-                <img src="img/my-photo.jpg" alt="Ahmad Albarghash">
-            </div>
-            <div class="about-text">
-                <h3 data-en="Passionate Full-Stack Developer" data-ar="مطور Full-Stack شغوف">Passionate Full-Stack Developer</h3>
-                <p data-en="I'm a Software Engineering graduate (2023) with an excellent academic record, passionate about creating innovative solutions through code. With 4+ years of experience in development, I specialize in Flutter app development, modern web technologies, and full-stack development." data-ar="أنا خريج هندسة البرمجيات (2023) بسجل أكاديمي ممتاز، شغوف بإنشاء حلول مبتكرة من خلال البرمجة. مع أكثر من 4 سنوات من الخبرة في التطوير، أتخصص في تطوير تطبيقات Flutter وتقنيات الويب الحديثة والتطوير Full-Stack.">I'm a Software Engineering graduate (2023) with an excellent academic record, passionate about creating innovative solutions through code. With 4+ years of experience in development, I specialize in Flutter app development, modern web technologies, and full-stack development.</p>
-                <p data-en="I have successfully completed more than 5 major full-stack projects, working with both frontend and backend technologies to deliver comprehensive solutions. My expertise spans across mobile app development, web applications, API integration, and database design." data-ar="لقد أكملت بنجاح أكثر من 5 مشاريع Full-Stack رئيسية، أعمل مع تقنيات الواجهة الأمامية والخلفية لتقديم حلول شاملة. تمتد خبرتي عبر تطوير تطبيقات الهاتف المحمول وتطبيقات الويب ودمج واجهات برمجة التطبيقات وتصميم قواعد البيانات.">I have successfully completed more than 5 major full-stack projects, working with both frontend and backend technologies to deliver comprehensive solutions. My expertise spans across mobile app development, web applications, API integration, and database design.</p>
-                <p data-en="I am particularly experienced in <strong>n8n workflow automation projects</strong>, where I design and implement complex automation workflows to streamline business processes and improve efficiency. Additionally, I work extensively on <strong>AI-related projects</strong>, integrating artificial intelligence and machine learning capabilities into applications to create intelligent, data-driven solutions." data-ar="لدي خبرة خاصة في <strong>مشاريع أتمتة سير العمل n8n</strong>، حيث أصمم وأنفذ سير عمل أتمتة معقدة لتبسيط العمليات التجارية وتحسين الكفاءة. بالإضافة إلى ذلك، أعمل بشكل مكثف على <strong>مشاريع متعلقة بالذكاء الاصطناعي</strong>، ودمج قدرات الذكاء الاصطناعي والتعلم الآلي في التطبيقات لإنشاء حلول ذكية مدفوعة بالبيانات.">I am particularly experienced in <strong>n8n workflow automation projects</strong>, where I design and implement complex automation workflows to streamline business processes and improve efficiency. Additionally, I work extensively on <strong>AI-related projects</strong>, integrating artificial intelligence and machine learning capabilities into applications to create intelligent, data-driven solutions.</p>
-                <p data-en="I am flexible, reliable, and possess excellent time-keeping skills. I'm an enthusiastic, self-motivated, reliable, responsible, and hard-working person who thrives in both team environments and independent work. I enjoy tackling complex challenges and finding elegant solutions to real-world problems." data-ar="أنا مرن وموثوق ولدي مهارات ممتازة في إدارة الوقت. أنا شخص متحمس وذو دوافع ذاتية وموثوق ومسؤول ومجتهد يزدهر في بيئات الفريق والعمل المستقل. أستمتع بمعالجة التحديات المعقدة وإيجاد حلول أنيقة للمشاكل الواقعية.">I am flexible, reliable, and possess excellent time-keeping skills. I'm an enthusiastic, self-motivated, reliable, responsible, and hard-working person who thrives in both team environments and independent work. I enjoy tackling complex challenges and finding elegant solutions to real-world problems.</p>
-                <p data-en="My goal is to create applications that not only function perfectly but also provide exceptional user experiences. I stay updated with the latest technologies and best practices in software development to ensure I deliver cutting-edge solutions." data-ar="هدفي هو إنشاء تطبيقات لا تعمل بشكل مثالي فحسب، بل توفر أيضًا تجارب مستخدم استثنائية. أبقى محدثًا بأحدث التقنيات وأفضل الممارسات في تطوير البرمجيات لضمان تقديم حلول متطورة.">My goal is to create applications that not only function perfectly but also provide exceptional user experiences. I stay updated with the latest technologies and best practices in software development to ensure I deliver cutting-edge solutions.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section fade-in">
-        <h2 class="section-title" data-en="My Skills" data-ar="مهاراتي">My Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3><i class="fas fa-mobile-alt"></i> Mobile Development</h3>
-                <div class="skill-item">
-                    <span>Flutter</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="95%"></div>
-                    </div>
-                    <span>95%</span>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero" aria-label="Introduction">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-rocket"></i>
+                    <span data-en="Available for freelance work" data-ar="متاح للعمل الحر">Available for freelance
+                        work</span>
                 </div>
-                <div class="skill-item">
-                    <span>Dart</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="90%"></div>
-                    </div>
-                    <span>90%</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-globe"></i> Web Development</h3>
-                <div class="skill-item">
-                    <span>HTML</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="95%"></div>
-                    </div>
-                    <span>95%</span>
-                </div>
-                <div class="skill-item">
-                    <span>CSS3</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-                <div class="skill-item">
-                    <span>JavaScript</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80%"></div>
-                    </div>
-                    <span>80%</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-server"></i> Backend & Database</h3>
-                <div class="skill-item">
-                    <span>PHP</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80%"></div>
-                    </div>
-                    <span>80%</span>
-                </div>
-                <div class="skill-item">
-                    <span>SQL</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80%"></div>
-                    </div>
-                    <span>80%</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-tools"></i> Tools & Technologies</h3>
-                <div class="skill-item">
-                    <span>Git</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-                <div class="skill-item">
-                    <span>REST APIs</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-                <div class="skill-item">
-                    <span>Firebase</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="75%"></div>
-                    </div>
-                    <span>75%</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-book"></i> Frameworks & Libraries</h3>
-                <div class="skill-item">
-                    <span>Flutter SDK</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="90%"></div>
-                    </div>
-                    <span>90%</span>
-                </div>
-                <div class="skill-item">
-                    <span>Bootstrap</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-                <div class="skill-item">
-                    <span>jQuery</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80%"></div>
-                    </div>
-                    <span>80%</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-robot"></i> Automation & AI</h3>
-                <div class="skill-item">
-                    <span>n8n Workflows</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-                <div class="skill-item">
-                    <span>AI Integration</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80%"></div>
-                    </div>
-                    <span>80%</span>
-                </div>
-                <div class="skill-item">
-                    <span>Workflow Automation</span>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85%"></div>
-                    </div>
-                    <span>85%</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="section fade-in">
-        <h2 class="section-title" data-en="My Services" data-ar="خدماتي">My Services</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3>Web Design</h3>
-                <p>Creating beautiful and modern websites that capture your brand essence and engage your audience effectively.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <h3>Web Development</h3>
-                <p>Building highly functional, responsive websites that are easy to use, maintain, and scale for your business needs.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3>Mobile Apps</h3>
-                <p>Developing high-quality cross-platform mobile applications using Flutter for iOS and Android platforms.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h3>Responsive Design</h3>
-                <p>Ensuring your websites and applications work perfectly across all devices and screen sizes.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-database"></i>
-                </div>
-                <h3>Database Design</h3>
-                <p>Designing and creating efficient, scalable databases and managing data structures for optimal performance.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <h3>n8n Workflow Automation</h3>
-                <p>Designing and implementing complex automation workflows using n8n to streamline business processes and improve operational efficiency.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h3>AI Integration</h3>
-                <p>Integrating artificial intelligence and machine learning capabilities into applications to create intelligent, data-driven solutions.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="section fade-in">
-        <h2 class="section-title" data-en="My Portfolio" data-ar="أعمالي">My Portfolio</h2>
-        <div class="portfolio-grid">
-            <!-- ToDo App -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/work-1.jpg" alt="ToDo App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <a href="#" class="portfolio-link" target="_blank" aria-label="View ToDo App"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="ToDo App" data-ar="تطبيق المهام">ToDo App</h3>
-                    <p data-en="A modern task management application built with Flutter, featuring clean UI and efficient task organization." data-ar="تطبيق حديث لإدارة المهام مبني باستخدام Flutter، يتميز بواجهة مستخدم نظيفة وتنظيم فعال للمهام.">A modern task management application built with Flutter, featuring clean UI and efficient task organization.</p>
-                    <a href="#" class="portfolio-link-btn" target="_blank" data-en="View Project" data-ar="عرض المشروع">
-                        <span>View Project</span>
-                        <i class="fas fa-external-link-alt"></i>
+                <h1 class="hero-title">Ahmad Albarghash</h1>
+                <p class="hero-subtitle" data-en="Software Engineer & Full-Stack Developer"
+                    data-ar="مهندس برمجيات ومطور Full-Stack">Software Engineer & Full-Stack Developer</p>
+                <div class="typing-text" id="typing-text" aria-live="polite"></div>
+                <div class="cta-buttons">
+                    <a href="#portfolio" class="btn btn-primary" data-en="View My Work" data-ar="شاهد أعمالي">
+                        <i class="fas fa-briefcase"></i>
+                        <span>View My Work</span>
                     </a>
-                </div>
-            </div>
-
-            <!-- Movies App -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/work-2.jpg" alt="Movies App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <a href="#" class="portfolio-link" target="_blank" aria-label="View Movies App"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="Movies App" data-ar="تطبيق الأفلام">Movies App</h3>
-                    <p data-en="Entertainment application showcasing movies with rich UI, search functionality, and detailed movie information." data-ar="تطبيق ترفيهي يعرض الأفلام بواجهة مستخدم غنية ووظيفة بحث ومعلومات تفصيلية عن الأفلام.">Entertainment application showcasing movies with rich UI, search functionality, and detailed movie information.</p>
-                    <a href="#" class="portfolio-link-btn" target="_blank" data-en="View Project" data-ar="عرض المشروع">
-                        <span>View Project</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Meals App -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/work-4.jpg" alt="Meals App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <a href="#" class="portfolio-link" target="_blank" aria-label="View Meals App"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="Meals App" data-ar="تطبيق الوجبات">Meals App</h3>
-                    <p data-en="Recipe and meal planning application with category browsing, favorites, and detailed cooking instructions." data-ar="تطبيق الوصفات وتخطيط الوجبات مع تصفح الفئات والمفضلة وتعليمات الطهي التفصيلية.">Recipe and meal planning application with category browsing, favorites, and detailed cooking instructions.</p>
-                    <a href="#" class="portfolio-link-btn" target="_blank" data-en="View Project" data-ar="عرض المشروع">
-                        <span>View Project</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- n8n Automation Project -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/n8n-project.jpg" alt="n8n Automation Project" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <a href="#" class="portfolio-link" target="_blank" aria-label="View n8n Project"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="n8n Workflow Automation" data-ar="أتمتة سير العمل n8n">n8n Workflow Automation</h3>
-                    <p data-en="Complex automation workflows using n8n to streamline business processes, integrate APIs, and automate repetitive tasks." data-ar="سير عمل أتمتة معقدة باستخدام n8n لتبسيط العمليات التجارية ودمج واجهات برمجة التطبيقات وأتمتة المهام المتكررة.">Complex automation workflows using n8n to streamline business processes, integrate APIs, and automate repetitive tasks.</p>
-                    <a href="#" class="portfolio-link-btn" target="_blank" data-en="View Project" data-ar="عرض المشروع">
-                        <span>View Project</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Infinity Academy - Comprehensive School Management System -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/infinity.png" alt="Infinity Academy School Management System" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <a href="https://infinityschools.academy/" class="portfolio-link" target="_blank" aria-label="View Infinity Academy"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="Infinity Academy - Complete School Management System" data-ar="أكاديمية إنفينيتي - نظام إدارة مدرسة كامل">Infinity Academy - Complete School Management System</h3>
-                    <p data-en="A comprehensive full-stack school management system featuring Android & iOS mobile apps, desktop application, admin panel, and dedicated web portals for teachers, supervisors, and principals. Includes student application management, seamless cross-platform synchronization, and role-based access control." data-ar="نظام إدارة مدرسة Full-Stack شامل يتضمن تطبيقات Android و iOS وتطبيق سطح المكتب ولوحة تحكم إدارية ومواقع ويب مخصصة للمعلمين والمشرفين والمديرين. يتضمن إدارة طلبات الطلاب ومزامنة سلسة عبر المنصات والتحكم في الوصول القائم على الأدوار.">A comprehensive full-stack school management system featuring Android & iOS mobile apps, desktop application, admin panel, and dedicated web portals for teachers, supervisors, and principals. Includes student application management, seamless cross-platform synchronization, and role-based access control.</p>
-                    <a href="https://infinityschools.academy/" class="portfolio-link-btn" target="_blank" data-en="Visit Website" data-ar="زيارة الموقع">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- BookNawa - Arabic Book Reading App -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/booknawa.png" alt="BookNawa Arabic Book Reading App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-book-reader"></i>
-                    </div>
-                    <a href="https://booknawa.com/" class="portfolio-link" target="_blank" aria-label="View BookNawa"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="BookNawa - Arabic Book Reading Platform" data-ar="بوك نوا - منصة قراءة الكتب العربية">BookNawa - Arabic Book Reading Platform</h3>
-                    <p data-en="A comprehensive Flutter mobile application designed for Arabic-speaking users, featuring an extensive digital library, personalized learning experiences, community features, and complete Arabic localization with RTL support. Built with Flutter, Laravel backend, MySQL database, and GetX state management for cross-platform iOS and Android excellence." data-ar="تطبيق Flutter شامل مصمم لمستخدمي اللغة العربية، يتضمن مكتبة رقمية واسعة وتجارب تعلم مخصصة وميزات مجتمعية وترجمة عربية كاملة مع دعم RTL. مبني باستخدام Flutter و Laravel للخلفية وقاعدة بيانات MySQL و GetX لإدارة الحالة للتميز عبر منصات iOS و Android.">A comprehensive Flutter mobile application designed for Arabic-speaking users, featuring an extensive digital library, personalized learning experiences, community features, and complete Arabic localization with RTL support. Built with Flutter, Laravel backend, MySQL database, and GetX state management for cross-platform iOS and Android excellence.</p>
-                    <a href="https://booknawa.com/" class="portfolio-link-btn" target="_blank" data-en="Visit Website" data-ar="زيارة الموقع">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- TraderCoreAI - AI Trading Platform -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/tradercore.png" alt="TraderCoreAI Trading Platform" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <a href="https://booknawa.com/ai/" class="portfolio-link" target="_blank" aria-label="View TraderCoreAI"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="TraderCoreAI - AI-Powered Trading Analysis Platform" data-ar="TraderCoreAI - منصة تحليل التداول المدعومة بالذكاء الاصطناعي">TraderCoreAI - AI-Powered Trading Analysis Platform</h3>
-                    <p data-en="Advanced AI-powered trading chart analysis platform with 95% accuracy rate, featuring real-time market insights, risk-reward ratio management, trade journal, performance dashboard, and professional risk calculators. Includes bilingual support (Arabic & English), credit-based pricing system, USDT payments, and enterprise-grade security. Serving 1K+ active users with 5K+ successful chart analyses." data-ar="منصة تحليل مخططات التداول المتقدمة المدعومة بالذكاء الاصطناعي بدقة 95%، تتضمن رؤى السوق في الوقت الفعلي وإدارة نسب المخاطرة والعائد ومجلة التداول ولوحة أداء وحاسبات مخاطر احترافية. يتضمن دعم ثنائي اللغة (العربية والإنجليزية) ونظام تسعير قائم على الرصيد ومدفوعات USDT وأمان على مستوى المؤسسات. يخدم أكثر من 1000 مستخدم نشط مع أكثر من 5000 تحليل مخطط ناجح.">Advanced AI-powered trading chart analysis platform with 95% accuracy rate, featuring real-time market insights, risk-reward ratio management, trade journal, performance dashboard, and professional risk calculators. Includes bilingual support (Arabic & English), credit-based pricing system, USDT payments, and enterprise-grade security. Serving 1K+ active users with 5K+ successful chart analyses.</p>
-                    <a href="https://booknawa.com/ai/" class="portfolio-link-btn" target="_blank" data-en="Visit Website" data-ar="زيارة الموقع">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Rafee Metal Industries Website -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/rafee.png" alt="Rafee Metal Industries Website" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-industry"></i>
-                    </div>
-                    <a href="https://rafeemetal.com/" class="portfolio-link" target="_blank" aria-label="View Rafee Metal Industries"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="Rafee Metal Industries - Metal Fabrication Company Website" data-ar="رافع للصناعات المعدنية - موقع شركة تصنيع المعادن">Rafee Metal Industries - Metal Fabrication Company Website</h3>
-                    <p data-en="Comprehensive full-stack website for a leading metal fabrication company in Dammam, Saudi Arabia. Features include services showcase (CNC laser cutting, metal fabrication, plasma cutting), product catalog, portfolio gallery, client testimonials, bilingual support (Arabic & English), contact system, and ISO 9001:2015 certification display. Established since 2001 with 20+ years of industry expertise." data-ar="موقع Full-Stack شامل لشركة تصنيع معادن رائدة في الدمام، المملكة العربية السعودية. يتضمن عرض الخدمات (قطع الليزر CNC وتصنيع المعادن وقطع البلازما) وفهرس المنتجات ومعرض الأعمال وشهادات العملاء ودعم ثنائي اللغة (العربية والإنجليزية) ونظام الاتصال وعرض شهادة ISO 9001:2015. تأسست منذ عام 2001 مع أكثر من 20 عامًا من الخبرة الصناعية.">Comprehensive full-stack website for a leading metal fabrication company in Dammam, Saudi Arabia. Features include services showcase (CNC laser cutting, metal fabrication, plasma cutting), product catalog, portfolio gallery, client testimonials, bilingual support (Arabic & English), contact system, and ISO 9001:2015 certification display. Established since 2001 with 20+ years of industry expertise.</p>
-                    <a href="https://rafeemetal.com/" class="portfolio-link-btn" target="_blank" data-en="Visit Website" data-ar="زيارة الموقع">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- AWTIAHS Website -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/awtiahs.png" alt="AWTIAHS Website" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fas fa-paint-roller"></i>
-                    </div>
-                    <a href="https://awtiahs.com/" class="portfolio-link" target="_blank" aria-label="View AWTIAHS Website"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="AWTIAHS - Plastering & Painting Company Website" data-ar="AWTIAHS - موقع شركة الجص والدهان">AWTIAHS - Plastering & Painting Company Website</h3>
-                    <p data-en="Full-stack website for a Dutch plastering and painting company featuring services showcase, project gallery, testimonials, and contact system. Built with modern web technologies." data-ar="موقع Full-Stack لشركة جص ودهان هولندية يتضمن عرض الخدمات ومعرض المشاريع والشهادات ونظام الاتصال. مبني بتقنيات الويب الحديثة.">Full-stack website for a Dutch plastering and painting company featuring services showcase, project gallery, testimonials, and contact system. Built with modern web technologies.</p>
-                    <a href="https://awtiahs.com/" class="portfolio-link-btn" target="_blank" data-en="Visit Website" data-ar="زيارة الموقع">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Google Play Store -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <img src="img/playstore.png" alt="Google Play Store" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="portfolio-image-overlay" style="display: none;">
-                        <i class="fab fa-google-play"></i>
-                    </div>
-                    <a href="https://play.google.com/store/apps/dev?id=7634674187641841884" class="portfolio-link" target="_blank" aria-label="View Google Play Store"></a>
-                </div>
-                <div class="portfolio-content">
-                    <h3 data-en="Google Play Store Portfolio" data-ar="معرض متجر Google Play">Google Play Store Portfolio</h3>
-                    <p data-en="Explore my complete collection of published applications on the Google Play Store." data-ar="استكشف مجموعتي الكاملة من التطبيقات المنشورة في متجر Google Play.">Explore my complete collection of published applications on the Google Play Store.</p>
-                    <a href="https://play.google.com/store/apps/dev?id=7634674187641841884" class="portfolio-link-btn" target="_blank" data-en="View on Play Store" data-ar="عرض في المتجر">
-                        <span>View on Play Store</span>
-                        <i class="fab fa-google-play"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section fade-in">
-        <h2 class="section-title" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>Let's Connect!</h3>
-                <p>Ready to bring your ideas to life? I'm here to help you create amazing digital experiences.</p>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div>
-                        <h4>Location</h4>
-                        <p>Jordan, Amman</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div>
-                        <h4>Phone</h4>
-                        <p dir="ltr"><a href="https://wa.me/962791570296" target="_blank">+962 79 157 02 96</a></p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
+                    <a href="#contact" class="btn btn-secondary" data-en="Get In Touch" data-ar="تواصل معي">
                         <i class="fas fa-envelope"></i>
-                    </div>
-                    <div>
-                        <h4>Email</h4>
-                        <p dir="ltr"><a href="mailto:ahmdrshyd19@gmail.com">ahmdrshyd19@gmail.com</a></p>
-                    </div>
-                </div>
-                
-                <div class="social-links">
-                    <a href="https://www.instagram.com/ahmad.albarghash1/" class="social-link" target="_blank" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
+                        <span>Get In Touch</span>
                     </a>
-                    <a href="https://twitter.com/AhmadAlbarghash?t=4u0WTFU2Z0CtAw8i8DciBw&s=09&fbclid=IwAR2htXNypqbB8q8WeKWeh80NwyQil8GrVYa98ZEyTzhdvo18KW_jNm6dQUE" class="social-link" target="_blank" aria-label="Twitter">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/ahmad-albarghash-bb96a6191?fbclid=IwAR1GYu9KlbFCYPOYpZfc5SyRr3_c3nijMrsB8UiKHTjbeK_C9Pe9Xa0AmDk" class="social-link" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/ahmadrashed1999" class="social-link" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
+                    <a href="files/Ahmad_Albarghash.pdf" class="btn btn-secondary" id="download-cv" download
+                        data-en="Download CV" data-ar="تحميل السيرة الذاتية">
+                        <i class="fas fa-download"></i>
+                        <span>Download CV</span>
                     </a>
                 </div>
             </div>
-            
-            <div class="contact-info">
-                <h3>Quick Stats</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <h4>25+</h4>
-                        <p>Projects Completed</p>
+            <div class="scroll-indicator-arrow">
+                <a href="#about" aria-label="Scroll to about section">
+                    <span data-en="Scroll Down" data-ar="انزل للأسفل">Scroll Down</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section fade-in" aria-label="About me">
+            <h2 class="section-title" data-en="About Me" data-ar="عني">About Me</h2>
+            <p class="section-subtitle" data-en="Get to know me better" data-ar="تعرف علي أكثر">Get to know me better
+            </p>
+            <div class="section-divider"></div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="img/my-photo.jpg" alt="Ahmad Albarghash - Software Engineer" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h3 data-en="Passionate Full-Stack Developer" data-ar="مطور Full-Stack شغوف">Passionate Full-Stack
+                        Developer</h3>
+                    <p data-en="I'm a Software Engineering graduate (2023) with an excellent academic record, passionate about creating innovative solutions through code. With 4+ years of experience in development, I specialize in Flutter app development, modern web technologies, and full-stack development."
+                        data-ar="أنا خريج هندسة البرمجيات (2023) بسجل أكاديمي ممتاز، شغوف بإنشاء حلول مبتكرة من خلال البرمجة. مع أكثر من 4 سنوات من الخبرة في التطوير، أتخصص في تطوير تطبيقات Flutter وتقنيات الويب الحديثة والتطوير Full-Stack.">
+                        I'm a Software Engineering graduate (2023) with an excellent academic record, passionate about
+                        creating innovative solutions through code. With 4+ years of experience in development, I
+                        specialize in Flutter app development, modern web technologies, and full-stack development.
+                    </p>
+                    <p data-en="I have successfully completed more than 5 major full-stack projects, working with both frontend and backend technologies to deliver comprehensive solutions. My expertise spans across mobile app development, web applications, API integration, and database design."
+                        data-ar="لقد أكملت بنجاح أكثر من 5 مشاريع Full-Stack رئيسية، أعمل مع تقنيات الواجهة الأمامية والخلفية لتقديم حلول شاملة. تمتد خبرتي عبر تطوير تطبيقات الهاتف المحمول وتطبيقات الويب ودمج واجهات برمجة التطبيقات وتصميم قواعد البيانات.">
+                        I have successfully completed more than 5 major full-stack projects, working with both frontend
+                        and backend technologies to deliver comprehensive solutions. My expertise spans across mobile
+                        app development, web applications, API integration, and database design.
+                    </p>
+                    <p data-en="I am particularly experienced in <strong>n8n workflow automation projects</strong> and <strong>AI-related projects</strong>, integrating artificial intelligence capabilities into applications to create intelligent, data-driven solutions."
+                        data-ar="لدي خبرة خاصة في <strong>مشاريع أتمتة سير العمل n8n</strong> و<strong>مشاريع متعلقة بالذكاء الاصطناعي</strong>، ودمج قدرات الذكاء الاصطناعي في التطبيقات لإنشاء حلول ذكية مدفوعة بالبيانات.">
+                        I am particularly experienced in <strong>n8n workflow automation projects</strong> and
+                        <strong>AI-related projects</strong>, integrating artificial intelligence capabilities into
+                        applications to create intelligent, data-driven solutions.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="25">0</div>
+                            <div class="stat-label" data-en="Projects" data-ar="مشروع">Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="4">0</div>
+                            <div class="stat-label" data-en="Years Exp." data-ar="سنوات خبرة">Years Exp.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="10">0</div>
+                            <div class="stat-label" data-en="Clients" data-ar="عميل">Clients</div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-calendar-alt"></i>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section fade-in" aria-label="My skills">
+            <h2 class="section-title" data-en="My Skills" data-ar="مهاراتي">My Skills</h2>
+            <p class="section-subtitle" data-en="Technologies I work with" data-ar="التقنيات التي أعمل بها">Technologies
+                I work with</p>
+            <div class="section-divider"></div>
+            <div class="skills-grid stagger-children">
+                <div class="skill-category">
+                    <h3><i class="fas fa-mobile-alt"></i> <span data-en="Mobile Development"
+                            data-ar="تطوير الهواتف">Mobile Development</span></h3>
+                    <div class="skill-item">
+                        <span>Flutter</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%"></div>
+                        </div>
+                        <span>95%</span>
                     </div>
-                    <div>
-                        <h4>4+</h4>
-                        <p>Years Experience</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div>
-                        <h4>10+</h4>
-                        <p>Happy Clients</p>
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <div>
-                        <h4>5+</h4>
-                        <p>Big Full-Stack Projects</p>
+                    <div class="skill-item">
+                        <span>Dart</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                        <span>90%</span>
                     </div>
                 </div>
-               
+                <div class="skill-category">
+                    <h3><i class="fas fa-globe"></i> <span data-en="Web Development" data-ar="تطوير الويب">Web
+                            Development</span></h3>
+                    <div class="skill-item">
+                        <span>HTML5</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%"></div>
+                        </div>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>CSS3</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>JavaScript</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                        <span>80%</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-server"></i> <span data-en="Backend & Database"
+                            data-ar="الخلفية وقواعد البيانات">Backend & Database</span></h3>
+                    <div class="skill-item">
+                        <span>PHP / Laravel</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>MySQL</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>Firebase</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="75%"></div>
+                        </div>
+                        <span>75%</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> <span data-en="Tools & Technologies"
+                            data-ar="الأدوات والتقنيات">Tools & Technologies</span></h3>
+                    <div class="skill-item">
+                        <span>Git / GitHub</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>REST APIs</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-robot"></i> <span data-en="Automation & AI"
+                            data-ar="الأتمتة والذكاء الاصطناعي">Automation & AI</span></h3>
+                    <div class="skill-item">
+                        <span>n8n Workflows</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>AI Integration</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                        <span>80%</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-book"></i> <span data-en="Frameworks" data-ar="الأطر">Frameworks</span></h3>
+                    <div class="skill-item">
+                        <span>Flutter SDK</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>Bootstrap</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section fade-in" aria-label="My services">
+            <h2 class="section-title" data-en="My Services" data-ar="خدماتي">My Services</h2>
+            <p class="section-subtitle" data-en="What I can do for you" data-ar="ما يمكنني تقديمه لك">What I can do for
+                you</p>
+            <div class="section-divider"></div>
+            <div class="services-grid stagger-children">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 data-en="Mobile Apps" data-ar="تطبيقات الهاتف">Mobile Apps</h3>
+                    <p data-en="Cross-platform mobile applications using Flutter for iOS and Android with beautiful UI and smooth performance."
+                        data-ar="تطبيقات هاتف متعددة المنصات باستخدام Flutter لـ iOS و Android بواجهة جميلة وأداء سلس.">
+                        Cross-platform mobile applications using Flutter for iOS and Android with beautiful UI and
+                        smooth performance.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3 data-en="Web Development" data-ar="تطوير الويب">Web Development</h3>
+                    <p data-en="Modern, responsive websites that are fast, accessible, and optimized for all devices and search engines."
+                        data-ar="مواقع ويب حديثة ومتجاوبة سريعة وسهلة الوصول ومحسنة لجميع الأجهزة ومحركات البحث.">
+                        Modern, responsive websites that are fast, accessible, and optimized for all devices and search
+                        engines.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-palette"></i></div>
+                    <h3 data-en="UI/UX Design" data-ar="تصميم واجهات">UI/UX Design</h3>
+                    <p data-en="Beautiful and intuitive user interfaces that provide exceptional user experiences and drive engagement."
+                        data-ar="واجهات مستخدم جميلة وبديهية توفر تجارب مستخدم استثنائية وتزيد من التفاعل.">
+                        Beautiful and intuitive user interfaces that provide exceptional user experiences and drive
+                        engagement.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-database"></i></div>
+                    <h3 data-en="Database Design" data-ar="تصميم قواعد البيانات">Database Design</h3>
+                    <p data-en="Efficient and scalable database architectures with proper normalization and optimized queries."
+                        data-ar="بنيات قواعد بيانات فعالة وقابلة للتوسع مع تطبيع صحيح واستعلامات محسنة.">
+                        Efficient and scalable database architectures with proper normalization and optimized queries.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3 data-en="n8n Automation" data-ar="أتمتة n8n">n8n Automation</h3>
+                    <p data-en="Complex workflow automation to streamline business processes and improve operational efficiency."
+                        data-ar="أتمتة سير العمل المعقدة لتبسيط العمليات التجارية وتحسين الكفاءة التشغيلية.">
+                        Complex workflow automation to streamline business processes and improve operational efficiency.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-brain"></i></div>
+                    <h3 data-en="AI Integration" data-ar="دمج الذكاء الاصطناعي">AI Integration</h3>
+                    <p data-en="Integrate AI and machine learning capabilities into applications for intelligent, data-driven solutions."
+                        data-ar="دمج قدرات الذكاء الاصطناعي والتعلم الآلي في التطبيقات لحلول ذكية مدفوعة بالبيانات.">
+                        Integrate AI and machine learning capabilities into applications for intelligent, data-driven
+                        solutions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section fade-in" aria-label="My portfolio">
+            <h2 class="section-title" data-en="My Portfolio" data-ar="أعمالي">My Portfolio</h2>
+            <p class="section-subtitle" data-en="Check out my recent projects" data-ar="اطلع على أحدث مشاريعي">Check out
+                my recent projects</p>
+            <div class="section-divider"></div>
+
+            <!-- Portfolio Filters -->
+            <div class="portfolio-filters" role="tablist" aria-label="Portfolio filters">
+                <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" data-en="All"
+                    data-ar="الكل">All</button>
+                <button class="filter-btn" data-filter="mobile" role="tab" aria-selected="false" data-en="Mobile"
+                    data-ar="هاتف">Mobile</button>
+                <button class="filter-btn" data-filter="web" role="tab" aria-selected="false" data-en="Web"
+                    data-ar="ويب">Web</button>
+                <button class="filter-btn" data-filter="automation" role="tab" aria-selected="false"
+                    data-en="Automation" data-ar="أتمتة">Automation</button>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- ToDo App -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/work-1.jpg" alt="ToDo App" loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.opacity='1';">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-tasks"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">Dart</span>
+                            <span class="portfolio-tag">SQLite</span>
+                        </div>
+                        <h3 data-en="ToDo App" data-ar="تطبيق المهام">ToDo App</h3>
+                        <p data-en="A modern task management application built with Flutter, featuring clean UI and efficient task organization."
+                            data-ar="تطبيق حديث لإدارة المهام مبني باستخدام Flutter، يتميز بواجهة مستخدم نظيفة وتنظيم فعال للمهام.">
+                            A modern task management application built with Flutter, featuring clean UI and efficient
+                            task organization.
+                        </p>
+                        <a href="#" class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Movies App -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/work-2.jpg" alt="Movies App" loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.opacity='1';">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-film"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">REST API</span>
+                            <span class="portfolio-tag">TMDB</span>
+                        </div>
+                        <h3 data-en="Movies App" data-ar="تطبيق الأفلام">Movies App</h3>
+                        <p data-en="Entertainment application showcasing movies with rich UI, search functionality, and detailed movie information."
+                            data-ar="تطبيق ترفيهي يعرض الأفلام بواجهة مستخدم غنية ووظيفة بحث ومعلومات تفصيلية عن الأفلام.">
+                            Entertainment application showcasing movies with rich UI, search functionality, and detailed
+                            movie information.
+                        </p>
+                        <a href="#" class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Meals App -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/work-4.jpg" alt="Meals App" loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.opacity='1';">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-utensils"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">Dart</span>
+                            <span class="portfolio-tag">Provider</span>
+                        </div>
+                        <h3 data-en="Meals App" data-ar="تطبيق الوجبات">Meals App</h3>
+                        <p data-en="Recipe and meal planning application with category browsing, favorites, and detailed cooking instructions."
+                            data-ar="تطبيق الوصفات وتخطيط الوجبات مع تصفح الفئات والمفضلة وتعليمات الطهي التفصيلية.">
+                            Recipe and meal planning application with category browsing, favorites, and detailed cooking
+                            instructions.
+                        </p>
+                        <a href="#" class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- n8n Automation Project -->
+                <div class="portfolio-item" data-category="automation">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/n8n-project.jpg" alt="n8n Automation Project" loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.opacity='1';">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-project-diagram"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">n8n</span>
+                            <span class="portfolio-tag">API</span>
+                            <span class="portfolio-tag">Automation</span>
+                        </div>
+                        <h3 data-en="n8n Workflow Automation" data-ar="أتمتة سير العمل n8n">n8n Workflow Automation</h3>
+                        <p data-en="Complex automation workflows using n8n to streamline business processes, integrate APIs, and automate repetitive tasks."
+                            data-ar="سير عمل أتمتة معقدة باستخدام n8n لتبسيط العمليات التجارية ودمج واجهات برمجة التطبيقات وأتمتة المهام المتكررة.">
+                            Complex automation workflows using n8n to streamline business processes, integrate APIs, and
+                            automate repetitive tasks.
+                        </p>
+                        <a href="#" class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Infinity Academy -->
+                <div class="portfolio-item" data-category="web mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/infinity.png" alt="Infinity Academy School Management System" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">Laravel</span>
+                            <span class="portfolio-tag">MySQL</span>
+                        </div>
+                        <h3 data-en="Infinity Academy" data-ar="أكاديمية إنفينيتي">Infinity Academy</h3>
+                        <p data-en="Complete school management system with mobile apps, desktop app, admin panel, and web portals."
+                            data-ar="نظام إدارة مدرسة كامل مع تطبيقات الهاتف وتطبيق سطح المكتب ولوحة التحكم ومواقع الويب.">
+                            Complete school management system with mobile apps, desktop app, admin panel, and web
+                            portals.
+                        </p>
+                        <a href="https://infinityschools.academy/" class="portfolio-link-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BookNawa -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/booknawa.png" alt="BookNawa Arabic Book Reading App" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">GetX</span>
+                            <span class="portfolio-tag">Laravel</span>
+                        </div>
+                        <h3 data-en="BookNawa" data-ar="بوك نوا">BookNawa</h3>
+                        <p data-en="Arabic book reading platform with extensive digital library and personalized learning experiences."
+                            data-ar="منصة قراءة الكتب العربية مع مكتبة رقمية واسعة وتجارب تعلم مخصصة.">
+                            Arabic book reading platform with extensive digital library and personalized learning
+                            experiences.
+                        </p>
+                        <a href="https://booknawa.com/" class="portfolio-link-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TraderCoreAI -->
+                <div class="portfolio-item" data-category="web automation">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/tradercore.png" alt="TraderCoreAI Trading Platform" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">AI</span>
+                            <span class="portfolio-tag">PHP</span>
+                            <span class="portfolio-tag">MySQL</span>
+                        </div>
+                        <h3 data-en="TraderCoreAI" data-ar="TraderCoreAI">TraderCoreAI</h3>
+                        <p data-en="AI-powered trading analysis platform with 95% accuracy, real-time insights, and risk management."
+                            data-ar="منصة تحليل تداول مدعومة بالذكاء الاصطناعي بدقة 95% ورؤى فورية وإدارة المخاطر.">
+                            AI-powered trading analysis platform with 95% accuracy, real-time insights, and risk
+                            management.
+                        </p>
+                        <a href="https://booknawa.com/ai/" class="portfolio-link-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Rafee Metal -->
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/rafee.png" alt="Rafee Metal Industries Website" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">PHP</span>
+                            <span class="portfolio-tag">Bootstrap</span>
+                            <span class="portfolio-tag">MySQL</span>
+                        </div>
+                        <h3 data-en="Rafee Metal Industries" data-ar="رافع للصناعات المعدنية">Rafee Metal Industries
+                        </h3>
+                        <p data-en="Corporate website for metal fabrication company with bilingual support and product catalog."
+                            data-ar="موقع شركة تصنيع معادن مع دعم ثنائي اللغة وكتالوج المنتجات.">
+                            Corporate website for metal fabrication company with bilingual support and product catalog.
+                        </p>
+                        <a href="https://rafeemetal.com/" class="portfolio-link-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- AWTIAHS -->
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/awtiahs.png" alt="AWTIAHS Website" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">HTML5</span>
+                            <span class="portfolio-tag">CSS3</span>
+                            <span class="portfolio-tag">JavaScript</span>
+                        </div>
+                        <h3 data-en="AWTIAHS" data-ar="AWTIAHS">AWTIAHS</h3>
+                        <p data-en="Modern website for Dutch plastering and painting company with project gallery and contact system."
+                            data-ar="موقع حديث لشركة جص ودهان هولندية مع معرض المشاريع ونظام الاتصال.">
+                            Modern website for Dutch plastering and painting company with project gallery and contact
+                            system.
+                        </p>
+                        <a href="https://awtiahs.com/" class="portfolio-link-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blast Grid -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/work_8.jpeg" alt="Blast Grid Game" loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.opacity='1';">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">Dart</span>
+                            <span class="portfolio-tag">Game</span>
+                        </div>
+                        <h3 data-en="Blast Grid" data-ar="بلاست جريد">Blast Grid</h3>
+                        <p data-en="A free block puzzle game where you place shapes, clear lines, and build satisfying combo scores. Offline fun with smooth, addictive gameplay."
+                            data-ar="لعبة ألغاز مكعبات مجانية حيث تضع الأشكال، تمسح الصفوف والأعمدة، وتبني نقاط كومبو مُرضية. متعة أوفلاين مع أسلوب لعب سلس وممتع.">
+                            A free block puzzle game where you place shapes, clear lines, and build satisfying combo scores. Offline fun with smooth, addictive gameplay.
+                        </p>
+                        <a href="https://play.google.com/store/apps/details?id=com.techquestcore.blastgrid"
+                            class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
+                            <i class="fab fa-google-play"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Play Store -->
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-image" data-lightbox="true">
+                        <img src="img/playstore.png" alt="Google Play Store Portfolio" loading="lazy">
+                        <div class="portfolio-image-overlay">
+                            <div class="portfolio-overlay-content">
+                                <i class="fas fa-search-plus"></i>
+                                <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Flutter</span>
+                            <span class="portfolio-tag">Dart</span>
+                            <span class="portfolio-tag">Firebase</span>
+                        </div>
+                        <h3 data-en="Play Store Apps" data-ar="تطبيقات المتجر">Play Store Apps</h3>
+                        <p data-en="Collection of published mobile applications available on Google Play Store."
+                            data-ar="مجموعة من تطبيقات الهاتف المنشورة في متجر Google Play.">
+                            Collection of published mobile applications available on Google Play Store.
+                        </p>
+                        <a href="https://play.google.com/store/apps/dev?id=7634674187641841884"
+                            class="portfolio-link-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
+                            <i class="fab fa-google-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section fade-in" aria-label="Contact me">
+            <h2 class="section-title" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</h2>
+            <p class="section-subtitle" data-en="Let's work together" data-ar="لنعمل معًا">Let's work together</p>
+            <div class="section-divider"></div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-en="Let's Connect!" data-ar="لنتواصل!">Let's Connect!</h3>
+                    <p data-en="Ready to bring your ideas to life? I'm here to help you create amazing digital experiences."
+                        data-ar="جاهز لتحويل أفكارك إلى واقع؟ أنا هنا لمساعدتك في إنشاء تجارب رقمية مذهلة.">
+                        Ready to bring your ideas to life? I'm here to help you create amazing digital experiences.
+                    </p>
+
+                    <div class="contact-items-wrapper">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h4 data-en="Location" data-ar="الموقع">Location</h4>
+                                <p>Jordan, Amman</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div>
+                                <h4 data-en="Phone" data-ar="الهاتف">Phone</h4>
+                                <p dir="ltr"><a href="https://wa.me/962791570296" target="_blank"
+                                        rel="noopener noreferrer">+962 79 157 02 96</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h4 data-en="Email" data-ar="البريد الإلكتروني">Email</h4>
+                                <p dir="ltr"><a href="mailto:ahmdrshyd19@gmail.com">ahmdrshyd19@gmail.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/ahmad.albarghash1/" class="social-link" target="_blank"
+                            rel="noopener noreferrer" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://twitter.com/AhmadAlbarghash" class="social-link" target="_blank"
+                            rel="noopener noreferrer" aria-label="Twitter/X">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ahmad-albarghash-bb96a6191" class="social-link"
+                            target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/ahmadrashed1999" class="social-link" target="_blank"
+                            rel="noopener noreferrer" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">AHMAD</div>
+            <p class="footer-text" data-en="Building digital experiences that matter" data-ar="بناء تجارب رقمية مهمة">
+                Building digital experiences that matter</p>
+            <div class="footer-links">
+                <a href="#home" data-en="Home" data-ar="الرئيسية">Home</a>
+                <a href="#about" data-en="About" data-ar="عني">About</a>
+                <a href="#portfolio" data-en="Portfolio" data-ar="الأعمال">Portfolio</a>
+                <a href="#contact" data-en="Contact" data-ar="اتصل بي">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/ahmad.albarghash1/" target="_blank" rel="noopener noreferrer"
+                    aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/AhmadAlbarghash" target="_blank" rel="noopener noreferrer"
+                    aria-label="Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg></a>
+                <a href="https://www.linkedin.com/in/ahmad-albarghash-bb96a6191" target="_blank"
+                    rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/ahmadrashed1999" target="_blank" rel="noopener noreferrer"
+                    aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="footer-copyright">
+                &copy; <span id="current-year"></span> Ahmad Albarghash. <span data-en="All rights reserved."
+                    data-ar="جميع الحقوق محفوظة.">All rights reserved.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+            <img src="" alt="" id="lightbox-img">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-desc"></p>
             </div>
         </div>
-    </section>
+    </div>
 
     <script>
-        // Typing animation
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('loaded');
+            }, 500);
+        });
+
+        // ===== PARTICLES =====
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = Math.random() * 20 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ===== CUSTOM CURSOR =====
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
+
+            document.querySelectorAll('a, button, .portfolio-image, .filter-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+            });
+        }
+
+        // ===== TYPING ANIMATION =====
         const typingText = document.getElementById('typing-text');
         let texts = ['Software Engineer', 'Full-Stack Developer', 'Flutter Developer', 'AI Developer', 'n8n Specialist', 'Problem Solver'];
         let textIndex = 0;
@@ -1596,7 +2685,7 @@
 
         function typeWriter() {
             const currentText = texts[textIndex];
-            
+
             if (isDeleting) {
                 typingText.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
@@ -1606,7 +2695,7 @@
             }
 
             if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 1500);
+                setTimeout(() => isDeleting = true, 2000);
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 textIndex = (textIndex + 1) % texts.length;
@@ -1614,18 +2703,99 @@
 
             setTimeout(typeWriter, isDeleting ? 50 : 100);
         }
-
-        // Start typing animation
         setTimeout(typeWriter, 1000);
 
-        // Scroll progress indicator
+        // ===== SCROLL PROGRESS =====
+        const scrollProgress = document.getElementById('scroll-progress');
         window.addEventListener('scroll', () => {
-            const scrollProgress = document.querySelector('.scroll-progress');
             const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
             scrollProgress.style.width = scrolled + '%';
         });
 
-        // Fade in animation on scroll
+        // ===== BACK TO TOP =====
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== MOBILE MENU =====
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuToggle.querySelector('i');
+            const isOpen = navLinks.classList.contains('active');
+            icon.classList.toggle('fa-bars', !isOpen);
+            icon.classList.toggle('fa-times', isOpen);
+            mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // ===== ACTIVE NAV LINK =====
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+
+                const target = document.querySelector(href);
+                if (!target) return;
+
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        const fadeInEls = document.querySelectorAll('.fade-in');
+        const staggerEls = document.querySelectorAll('.stagger-children');
+
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1635,233 +2805,147 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
+
                     // Animate skill bars
-                    const skillBars = entry.target.querySelectorAll('.skill-progress');
-                    skillBars.forEach(bar => {
+                    entry.target.querySelectorAll('.skill-progress').forEach(bar => {
                         const width = bar.getAttribute('data-width');
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, 300);
+                        if (width) {
+                            setTimeout(() => bar.style.width = width, 300);
+                        }
+                    });
+
+                    // Animate stat numbers
+                    entry.target.querySelectorAll('.stat-number').forEach(stat => {
+                        const target = parseInt(stat.getAttribute('data-count'));
+                        if (target) animateNumber(stat, target);
                     });
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
+        fadeInEls.forEach(el => observer.observe(el));
+        staggerEls.forEach(el => observer.observe(el));
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // ===== NUMBER ANIMATION =====
+        function animateNumber(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + '+';
                 }
+            }, 30);
+        }
+
+        // ===== PORTFOLIO FILTERS =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category.includes(filter)) {
+                        item.classList.remove('hidden');
+                        item.style.position = 'relative';
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
             });
         });
 
-        // Add active class to nav links on scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-links a');
+        // ===== LIGHTBOX =====
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxDesc = document.getElementById('lightbox-desc');
+        const lightboxClose = document.getElementById('lightbox-close');
 
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
+        document.querySelectorAll('.portfolio-image[data-lightbox="true"]').forEach(img => {
+            img.addEventListener('click', () => {
+                const imgSrc = img.querySelector('img').src;
+                const card = img.closest('.portfolio-item');
+                const title = card.querySelector('h3').textContent;
+                const desc = card.querySelector('p').textContent;
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Parallax effect for background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.bg-animation');
-            const speed = scrolled * 0.5;
-            parallax.style.transform = `translateY(${speed}px)`;
-        });
-
-        // Add hover effects to portfolio items
-        document.querySelectorAll('.portfolio-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.querySelector('.portfolio-image').style.transform = 'scale(1.05)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.querySelector('.portfolio-image').style.transform = 'scale(1)';
+                lightboxImg.src = imgSrc;
+                lightboxTitle.textContent = title;
+                lightboxDesc.textContent = desc;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
             });
         });
 
-        // Dynamic navbar background on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(15, 23, 42, 0.95)';
-            } else {
-                nav.style.background = 'rgba(15, 23, 42, 0.8)';
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
             }
         });
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-        mobileMenuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            const icon = mobileMenuToggle.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                const icon = mobileMenuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        // ===== RIPPLE EFFECT =====
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
             });
         });
 
-        // Language Switcher
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
+        updateTheme();
+
+        themeToggle.addEventListener('click', () => {
+            isDarkTheme = !isDarkTheme;
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+            updateTheme();
+        });
+
+        function updateTheme() {
+            document.body.classList.toggle('light-theme', !isDarkTheme);
+            themeIcon.className = isDarkTheme ? 'fas fa-moon' : 'fas fa-sun';
+            themeText.textContent = isDarkTheme ? 'Dark' : 'Light';
+        }
+
+        // ===== LANGUAGE SWITCHER =====
         const translations = {
             en: {
-                nav: ['Home', 'About', 'Skills', 'Services', 'Portfolio', 'Contact'],
-                hero: {
-                    subtitle: 'Software Engineer & Developer',
-                    btn1: 'View My Work',
-                    btn2: 'Get In Touch'
-                },
-                typing: ['Software Engineer', 'Full-Stack Developer', 'Flutter Developer', 'AI Developer', 'n8n Specialist', 'Problem Solver'],
-                sections: {
-                    about: 'About Me',
-                    skills: 'My Skills',
-                    services: 'My Services',
-                    portfolio: 'My Portfolio',
-                    contact: 'Get In Touch'
-                },
-                about: {
-                    title: 'Passionate Full-Stack Developer',
-                    p1: "I'm a Software Engineering graduate (2023) with an excellent academic record, passionate about creating innovative solutions through code. With 4+ years of experience in development, I specialize in Flutter app development, modern web technologies, and full-stack development.",
-                    p2: 'I have successfully completed more than 5 major full-stack projects, working with both frontend and backend technologies to deliver comprehensive solutions. My expertise spans across mobile app development, web applications, API integration, and database design.',
-                    p3: 'I am particularly experienced in <strong>n8n workflow automation projects</strong>, where I design and implement complex automation workflows to streamline business processes and improve efficiency. Additionally, I work extensively on <strong>AI-related projects</strong>, integrating artificial intelligence and machine learning capabilities into applications to create intelligent, data-driven solutions.',
-                    p4: "I am flexible, reliable, and possess excellent time-keeping skills. I'm an enthusiastic, self-motivated, reliable, responsible, and hard-working person who thrives in both team environments and independent work. I enjoy tackling complex challenges and finding elegant solutions to real-world problems.",
-                    p5: 'My goal is to create applications that not only function perfectly but also provide exceptional user experiences. I stay updated with the latest technologies and best practices in software development to ensure I deliver cutting-edge solutions.'
-                },
-                skills: {
-                    mobile: 'Mobile Development',
-                    web: 'Web Development',
-                    backend: 'Backend & Database',
-                    tools: 'Tools & Technologies',
-                    frameworks: 'Frameworks & Libraries',
-                    automation: 'Automation & AI'
-                },
-                services: {
-                    design: { title: 'Web Design', desc: 'Creating beautiful and modern websites that capture your brand essence and engage your audience effectively.' },
-                    dev: { title: 'Web Development', desc: 'Building highly functional, responsive websites that are easy to use, maintain, and scale for your business needs.' },
-                    mobile: { title: 'Mobile Apps', desc: 'Developing high-quality cross-platform mobile applications using Flutter for iOS and Android platforms.' },
-                    responsive: { title: 'Responsive Design', desc: 'Ensuring your websites and applications work perfectly across all devices and screen sizes.' },
-                    database: { title: 'Database Design', desc: 'Designing and creating efficient, scalable databases and managing data structures for optimal performance.' },
-                    n8n: { title: 'n8n Workflow Automation', desc: 'Designing and implementing complex automation workflows using n8n to streamline business processes and improve operational efficiency.' },
-                    ai: { title: 'AI Integration', desc: 'Integrating artificial intelligence and machine learning capabilities into applications to create intelligent, data-driven solutions.' }
-                },
-                portfolio: {
-                    todo: { title: 'ToDo App', desc: 'A modern task management application built with Flutter, featuring clean UI and efficient task organization.' },
-                    movies: { title: 'Movies App', desc: 'Entertainment application showcasing movies with rich UI, search functionality, and detailed movie information.' },
-                    meals: { title: 'Meals App', desc: 'Recipe and meal planning application with category browsing, favorites, and detailed cooking instructions.' },
-                    store: { title: 'App Store Portfolio', desc: 'Explore my complete collection of published applications on the App Store.' }
-                },
-                contact: {
-                    connect: "Let's Connect!",
-                    ready: "Ready to bring your ideas to life? I'm here to help you create amazing digital experiences.",
-                    location: 'Location',
-                    phone: 'Phone',
-                    email: 'Email',
-                    stats: 'Quick Stats',
-                    projects: 'Projects Completed',
-                    experience: 'Years Experience',
-                    clients: 'Happy Clients',
-                    fullstack: 'Big Full-Stack Projects'
-                }
+                typing: ['Software Engineer', 'Full-Stack Developer', 'Flutter Developer', 'AI Developer', 'n8n Specialist', 'Problem Solver']
             },
             ar: {
-                nav: ['الرئيسية', 'عني', 'المهارات', 'الخدمات', 'الأعمال', 'اتصل بي'],
-                hero: {
-                    subtitle: 'مهندس برمجيات ومطور',
-                    btn1: 'شاهد أعمالي',
-                    btn2: 'تواصل معي'
-                },
-                typing: ['مهندس برمجيات', 'مطور Full-Stack', 'مطور Flutter', 'مطور ذكاء اصطناعي', 'أخصائي n8n', 'حل المشاكل'],
-                sections: {
-                    about: 'عني',
-                    skills: 'مهاراتي',
-                    services: 'خدماتي',
-                    portfolio: 'أعمالي',
-                    contact: 'تواصل معي'
-                },
-                about: {
-                    title: 'مطور Full-Stack شغوف',
-                    p1: 'أنا خريج هندسة البرمجيات (2023) بسجل أكاديمي ممتاز، شغوف بإنشاء حلول مبتكرة من خلال البرمجة. مع أكثر من 4 سنوات من الخبرة في التطوير، أتخصص في تطوير تطبيقات Flutter وتقنيات الويب الحديثة والتطوير Full-Stack.',
-                    p2: 'لقد أكملت بنجاح أكثر من 5 مشاريع Full-Stack رئيسية، أعمل مع تقنيات الواجهة الأمامية والخلفية لتقديم حلول شاملة. تمتد خبرتي عبر تطوير تطبيقات الهاتف المحمول وتطبيقات الويب ودمج واجهات برمجة التطبيقات وتصميم قواعد البيانات.',
-                    p3: 'لدي خبرة خاصة في <strong>مشاريع أتمتة سير العمل n8n</strong>، حيث أصمم وأنفذ سير عمل أتمتة معقدة لتبسيط العمليات التجارية وتحسين الكفاءة. بالإضافة إلى ذلك، أعمل بشكل مكثف على <strong>مشاريع متعلقة بالذكاء الاصطناعي</strong>، ودمج قدرات الذكاء الاصطناعي والتعلم الآلي في التطبيقات لإنشاء حلول ذكية مدفوعة بالبيانات.',
-                    p4: 'أنا مرن وموثوق ولدي مهارات ممتازة في إدارة الوقت. أنا شخص متحمس وذو دوافع ذاتية وموثوق ومسؤول ومجتهد يزدهر في بيئات الفريق والعمل المستقل. أستمتع بمعالجة التحديات المعقدة وإيجاد حلول أنيقة للمشاكل الواقعية.',
-                    p5: 'هدفي هو إنشاء تطبيقات لا تعمل بشكل مثالي فحسب، بل توفر أيضًا تجارب مستخدم استثنائية. أبقى محدثًا بأحدث التقنيات وأفضل الممارسات في تطوير البرمجيات لضمان تقديم حلول متطورة.'
-                },
-                skills: {
-                    mobile: 'تطوير الهواتف المحمولة',
-                    web: 'تطوير الويب',
-                    backend: 'الخلفية وقواعد البيانات',
-                    tools: 'الأدوات والتقنيات',
-                    frameworks: 'الأطر والمكتبات',
-                    automation: 'الأتمتة والذكاء الاصطناعي'
-                },
-                services: {
-                    design: { title: 'تصميم الويب', desc: 'إنشاء مواقع ويب جميلة وحديثة تجسد جوهر علامتك التجارية وتجذب جمهورك بفعالية.' },
-                    dev: { title: 'تطوير الويب', desc: 'بناء مواقع ويب وظيفية للغاية وسريعة الاستجابة وسهلة الاستخدام والصيانة والتوسع لتلبية احتياجات عملك.' },
-                    mobile: { title: 'تطبيقات الهاتف المحمول', desc: 'تطوير تطبيقات الهاتف المحمول عالية الجودة متعددة المنصات باستخدام Flutter لمنصات iOS و Android.' },
-                    responsive: { title: 'التصميم المتجاوب', desc: 'ضمان عمل مواقع الويب وتطبيقاتك بشكل مثالي عبر جميع الأجهزة وأحجام الشاشات.' },
-                    database: { title: 'تصميم قواعد البيانات', desc: 'تصميم وإنشاء قواعد بيانات فعالة وقابلة للتوسع وإدارة هياكل البيانات للأداء الأمثل.' },
-                    n8n: { title: 'أتمتة سير العمل n8n', desc: 'تصميم وتنفيذ سير عمل أتمتة معقدة باستخدام n8n لتبسيط العمليات التجارية وتحسين الكفاءة التشغيلية.' },
-                    ai: { title: 'دمج الذكاء الاصطناعي', desc: 'دمج قدرات الذكاء الاصطناعي والتعلم الآلي في التطبيقات لإنشاء حلول ذكية مدفوعة بالبيانات.' }
-                },
-                portfolio: {
-                    todo: { title: 'تطبيق المهام', desc: 'تطبيق حديث لإدارة المهام مبني باستخدام Flutter، يتميز بواجهة مستخدم نظيفة وتنظيم فعال للمهام.' },
-                    movies: { title: 'تطبيق الأفلام', desc: 'تطبيق ترفيهي يعرض الأفلام بواجهة مستخدم غنية ووظيفة بحث ومعلومات تفصيلية عن الأفلام.' },
-                    meals: { title: 'تطبيق الوجبات', desc: 'تطبيق الوصفات وتخطيط الوجبات مع تصفح الفئات والمفضلة وتعليمات الطهي التفصيلية.' },
-                    store: { title: 'معرض متجر التطبيقات', desc: 'استكشف مجموعتي الكاملة من التطبيقات المنشورة في متجر التطبيقات.' }
-                },
-                contact: {
-                    connect: 'دعنا نتصل!',
-                    ready: 'جاهز لتحويل أفكارك إلى واقع؟ أنا هنا لمساعدتك في إنشاء تجارب رقمية مذهلة.',
-                    location: 'الموقع',
-                    phone: 'الهاتف',
-                    email: 'البريد الإلكتروني',
-                    stats: 'إحصائيات سريعة',
-                    projects: 'المشاريع المكتملة',
-                    experience: 'سنوات الخبرة',
-                    clients: 'عملاء سعداء',
-                    fullstack: 'مشاريع Full-Stack كبيرة'
-                }
+                typing: ['مهندس برمجيات', 'مطور Full-Stack', 'مطور Flutter', 'مطور ذكاء اصطناعي', 'أخصائي n8n', 'حل المشاكل']
             }
         };
 
@@ -1869,217 +2953,38 @@
         const langSwitcher = document.getElementById('language-switcher');
         const langText = document.getElementById('lang-text');
 
+        setLanguage(currentLang);
+
+        langSwitcher.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            localStorage.setItem('language', currentLang);
+            setLanguage(currentLang);
+        });
+
         function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
             document.documentElement.lang = lang;
             document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            langText.textContent = lang === 'ar' ? 'AR' : 'EN';
+            langText.textContent = lang.toUpperCase();
 
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach((link, index) => {
-                link.textContent = translations[lang].nav[index];
-            });
-
-            // Update elements with data attributes
             document.querySelectorAll('[data-en][data-ar]').forEach(el => {
                 el.innerHTML = el.getAttribute(`data-${lang}`);
             });
 
-            // Update typing animation texts
-            const typingTexts = translations[lang].typing;
-            // The typing animation will use these texts
-
-            // Update section titles
-            document.querySelectorAll('.section-title').forEach(title => {
-                const key = title.getAttribute('data-en');
-                if (key === 'About Me') title.textContent = translations[lang].sections.about;
-                else if (key === 'My Skills') title.textContent = translations[lang].sections.skills;
-                else if (key === 'My Services') title.textContent = translations[lang].sections.services;
-                else if (key === 'My Portfolio') title.textContent = translations[lang].sections.portfolio;
-                else if (key === 'Get In Touch') title.textContent = translations[lang].sections.contact;
-            });
-
-            // Update about section
-            const aboutTitle = document.querySelector('.about-text h3');
-            if (aboutTitle) aboutTitle.textContent = translations[lang].about.title;
-            
-            const aboutParagraphs = document.querySelectorAll('.about-text p');
-            if (aboutParagraphs.length >= 5) {
-                aboutParagraphs[0].innerHTML = translations[lang].about.p1;
-                aboutParagraphs[1].innerHTML = translations[lang].about.p2;
-                aboutParagraphs[2].innerHTML = translations[lang].about.p3;
-                aboutParagraphs[3].innerHTML = translations[lang].about.p4;
-                aboutParagraphs[4].innerHTML = translations[lang].about.p5;
-            }
-
-            // Update skill categories
-            const skillCategories = document.querySelectorAll('.skill-category h3');
-            skillCategories.forEach(cat => {
-                const icon = cat.querySelector('i');
-                const iconClass = icon ? icon.className : '';
-                const text = cat.textContent.trim();
-                if (text.includes('Mobile Development')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.mobile}`;
-                } else if (text.includes('Web Development')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.web}`;
-                } else if (text.includes('Backend')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.backend}`;
-                } else if (text.includes('Tools')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.tools}`;
-                } else if (text.includes('Frameworks')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.frameworks}`;
-                } else if (text.includes('Automation')) {
-                    cat.innerHTML = `<i class="${iconClass}"></i> ${translations[lang].skills.automation}`;
-                }
-            });
-
-            // Update services
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                const title = card.querySelector('h3');
-                const desc = card.querySelector('p');
-                const icon = card.querySelector('.service-icon i');
-                if (icon) {
-                    const iconClass = icon.className;
-                    if (iconClass.includes('fa-palette')) {
-                        title.textContent = translations[lang].services.design.title;
-                        desc.textContent = translations[lang].services.design.desc;
-                    } else if (iconClass.includes('fa-code') && !iconClass.includes('fa-laptop')) {
-                        title.textContent = translations[lang].services.dev.title;
-                        desc.textContent = translations[lang].services.dev.desc;
-                    } else if (iconClass.includes('fa-mobile-alt')) {
-                        title.textContent = translations[lang].services.mobile.title;
-                        desc.textContent = translations[lang].services.mobile.desc;
-                    } else if (iconClass.includes('fa-laptop-code')) {
-                        title.textContent = translations[lang].services.responsive.title;
-                        desc.textContent = translations[lang].services.responsive.desc;
-                    } else if (iconClass.includes('fa-database')) {
-                        title.textContent = translations[lang].services.database.title;
-                        desc.textContent = translations[lang].services.database.desc;
-                    } else if (iconClass.includes('fa-project-diagram')) {
-                        title.textContent = translations[lang].services.n8n.title;
-                        desc.textContent = translations[lang].services.n8n.desc;
-                    } else if (iconClass.includes('fa-brain')) {
-                        title.textContent = translations[lang].services.ai.title;
-                        desc.textContent = translations[lang].services.ai.desc;
-                    }
-                }
-            });
-
-            // Update portfolio
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            portfolioItems.forEach((item, index) => {
-                const title = item.querySelector('.portfolio-content h3');
-                const desc = item.querySelector('.portfolio-content p');
-                const btn = item.querySelector('.portfolio-link-btn span');
-                const icon = item.querySelector('.portfolio-image i');
-                const overlayIcon = item.querySelector('.portfolio-image-overlay i');
-                
-                // Update title and description using data attributes
-                if (title && title.hasAttribute('data-en')) {
-                    title.textContent = title.getAttribute(`data-${lang}`);
-                }
-                if (desc && desc.hasAttribute('data-en')) {
-                    desc.textContent = desc.getAttribute(`data-${lang}`);
-                }
-                
-                // Update button text
-                if (btn && btn.parentElement.hasAttribute('data-en')) {
-                    btn.textContent = btn.parentElement.getAttribute(`data-${lang}`);
-                }
-                
-                // Update portfolio items by icon
-                if (icon || overlayIcon) {
-                    const iconElement = icon || overlayIcon;
-                    const iconClass = iconElement.className;
-                    if (iconClass.includes('fa-tasks')) {
-                        if (title && !title.hasAttribute('data-en')) {
-                            title.textContent = translations[lang].portfolio.todo.title;
-                        }
-                        if (desc && !desc.hasAttribute('data-en')) {
-                            desc.textContent = translations[lang].portfolio.todo.desc;
-                        }
-                    } else if (iconClass.includes('fa-film')) {
-                        if (title && !title.hasAttribute('data-en')) {
-                            title.textContent = translations[lang].portfolio.movies.title;
-                        }
-                        if (desc && !desc.hasAttribute('data-en')) {
-                            desc.textContent = translations[lang].portfolio.movies.desc;
-                        }
-                    } else if (iconClass.includes('fa-utensils')) {
-                        if (title && !title.hasAttribute('data-en')) {
-                            title.textContent = translations[lang].portfolio.meals.title;
-                        }
-                        if (desc && !desc.hasAttribute('data-en')) {
-                            desc.textContent = translations[lang].portfolio.meals.desc;
-                        }
-                    } else if (iconClass.includes('fa-google-play')) {
-                        if (title && !title.hasAttribute('data-en')) {
-                            title.textContent = translations[lang].portfolio.store.title;
-                        }
-                        if (desc && !desc.hasAttribute('data-en')) {
-                            desc.textContent = translations[lang].portfolio.store.desc;
-                        }
-                    }
-                }
-            });
-
-            // Update contact section
-            const contactInfo = document.querySelectorAll('.contact-info');
-            if (contactInfo[0]) {
-                const h3 = contactInfo[0].querySelector('h3');
-                const p = contactInfo[0].querySelector('p');
-                if (h3) h3.textContent = translations[lang].contact.connect;
-                if (p) p.textContent = translations[lang].contact.ready;
-                
-                // Update contact items
-                const contactItems = contactInfo[0].querySelectorAll('.contact-item');
-                contactItems.forEach(item => {
-                    const h4 = item.querySelector('h4');
-                    if (h4) {
-                        const text = h4.textContent.trim();
-                        if (text === 'Location') h4.textContent = translations[lang].contact.location;
-                        else if (text === 'Phone') h4.textContent = translations[lang].contact.phone;
-                        else if (text === 'Email') h4.textContent = translations[lang].contact.email;
-                    }
-                });
-            }
-            if (contactInfo[1]) {
-                const h3 = contactInfo[1].querySelector('h3');
-                if (h3) h3.textContent = translations[lang].contact.stats;
-                
-                // Update stats items
-                const statsItems = contactInfo[1].querySelectorAll('.contact-item');
-                statsItems.forEach(item => {
-                    const p = item.querySelector('p');
-                    if (p) {
-                        const text = p.textContent.trim();
-                        if (text === 'Projects Completed') p.textContent = translations[lang].contact.projects;
-                        else if (text === 'Years Experience') p.textContent = translations[lang].contact.experience;
-                        else if (text === 'Happy Clients') p.textContent = translations[lang].contact.clients;
-                        else if (text === 'Big Full-Stack Projects') p.textContent = translations[lang].contact.fullstack;
-                    }
-                });
-            }
-
-            // Update typing animation
-            typingText.textContent = '';
-            textIndex = 0;
-            charIndex = 0;
-            isDeleting = false;
             texts = translations[lang].typing;
         }
 
-        // Initialize language on page load
-        setLanguage(currentLang);
+        // ===== CURRENT YEAR =====
+        document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Language switcher click handler
-        langSwitcher.addEventListener('click', () => {
-            const newLang = currentLang === 'en' ? 'ar' : 'en';
-            setLanguage(newLang);
+        // ===== PARALLAX EFFECT =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.bg-animation');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
         });
     </script>
 </body>
+
 </html>
