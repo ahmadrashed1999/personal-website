@@ -8,6 +8,39 @@
     <meta name="description"
         content="Ahmad Albarghash - Software Engineer & Full-Stack Developer specializing in Flutter, Web Development, AI Integration, and n8n Workflow Automation">
     <meta name="theme-color" content="#0a0a0f">
+    <link rel="canonical" href="https://ahmadalbarghash.tech/">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0f'/%3E%3Ctext x='28' y='45' font-family='Arial,sans-serif' font-size='40' font-weight='700' fill='%23f2f1ea' text-anchor='middle'%3Ea%3C/text%3E%3Ccircle cx='48' cy='42' r='5' fill='%23d8ff3e'/%3E%3C/svg%3E">
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ahmadalbarghash.tech/">
+    <meta property="og:site_name" content="Ahmad Albarghash">
+    <meta property="og:title" content="Ahmad Albarghash — Software Engineer & Full-Stack Developer">
+    <meta property="og:description"
+        content="Flutter apps, web platforms, AI integration and n8n automation. Projects include Smart Budget, Atqin, Book Nawa and Infinity Academy Schools.">
+    <meta property="og:image" content="https://ahmadalbarghash.tech/img/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@AhmadAlbarghash">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ahmad Albarghash",
+            "url": "https://ahmadalbarghash.tech/",
+            "jobTitle": "Software Engineer & Full-Stack Developer",
+            "address": { "@type": "PostalAddress", "addressLocality": "Amman", "addressCountry": "JO" },
+            "knowsAbout": ["Flutter", "Laravel", "Firebase", "AI Integration", "n8n Automation"],
+            "sameAs": [
+                "https://github.com/ahmadrashed1999",
+                "https://www.linkedin.com/in/ahmad-albarghash-bb96a6191",
+                "https://twitter.com/AhmadAlbarghash",
+                "https://www.instagram.com/ahmadalbarghash/"
+            ]
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1331,10 +1364,32 @@
             border: 1px solid var(--line-strong);
             color: var(--muted);
             border-radius: 60px;
-            padding: 0.6rem 1.5rem;
+            padding: 0.55rem 0.7rem 0.55rem 1.4rem;
             font-size: 0.92rem;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
             transition: all 0.3s ease;
+        }
+
+        body[dir="rtl"] .filter-btn {
+            padding: 0.55rem 1.4rem 0.55rem 0.7rem;
+        }
+
+        .filter-count {
+            min-width: 1.7rem;
+            height: 1.7rem;
+            padding: 0 0.45rem;
+            border-radius: 40px;
+            background: var(--line);
+            color: var(--ink);
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-grid;
+            place-items: center;
+            font-variant-numeric: tabular-nums;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .filter-btn:hover {
@@ -1346,6 +1401,11 @@
             background: var(--accent);
             color: #0a0a0f;
             border-color: var(--accent);
+        }
+
+        .filter-btn.active .filter-count {
+            background: rgba(10, 10, 15, 0.14);
+            color: #0a0a0f;
         }
 
         .work-grid {
@@ -1360,6 +1420,8 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
             transition: transform 0.6s var(--ease-out-expo), border-color 0.35s ease,
                 box-shadow 0.4s ease, opacity 0.5s ease;
             will-change: transform;
@@ -1375,19 +1437,90 @@
             display: none;
         }
 
+        /* Re-entrance when filtering / expanding (backwards fill keeps :hover working afterwards) */
+        .work-card.pop {
+            animation: card-pop 0.6s var(--ease-out-expo) backwards;
+            animation-delay: var(--pop-delay, 0ms);
+        }
+
+        @keyframes card-pop {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(0.97);
+            }
+        }
+
+        /* Featured project: media and copy side by side */
+        .work-card.is-featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+        }
+
+        .work-card.is-featured .work-media {
+            aspect-ratio: auto;
+            height: 100%;
+            min-height: 400px;
+        }
+
+        .work-card.is-featured .work-body {
+            padding: 2.6rem 2.8rem;
+            justify-content: center;
+        }
+
+        .work-card.is-featured .work-body h3 {
+            font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+            letter-spacing: -0.02em;
+        }
+
+        .work-card.is-featured .work-links {
+            margin-top: 0;
+        }
+
         .work-media {
             position: relative;
+            display: block;
+            width: 100%;
             aspect-ratio: 16/10;
             overflow: hidden;
             cursor: pointer;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            color: inherit;
+            text-align: inherit;
             background: linear-gradient(135deg, #16161f, #0e0e15);
+        }
+
+        .work-media:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
         }
 
         .work-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center top;
             transition: transform 0.9s var(--ease-out-expo), filter 0.5s ease;
+        }
+
+        /* wide screenshots whose headline sits on the left */
+        .work-media.is-left img {
+            object-position: left top;
+        }
+
+        /* Square logos / icons: show whole artwork instead of cropping */
+        .work-media.is-icon {
+            background: radial-gradient(circle at 50% 45%, rgba(216, 255, 62, 0.09), transparent 60%),
+                linear-gradient(135deg, #16161f, #0e0e15);
+        }
+
+        .work-media.is-icon img {
+            object-fit: contain;
+            object-position: center;
+            padding: 9% 11%;
+            filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.55));
         }
 
         .work-card:hover .work-media img {
@@ -1421,24 +1554,81 @@
             transition: opacity 0.35s ease;
         }
 
-        .work-card:hover .work-media::after {
+        .work-card:hover .work-media::after,
+        .work-media:focus-visible::after {
             opacity: 1;
         }
 
-        .work-card:hover .view-pill {
+        .work-card:hover .view-pill,
+        .work-media:focus-visible .view-pill {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
 
+        .work-badge,
+        .work-count {
+            position: absolute;
+            z-index: 3;
+            border-radius: 40px;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .work-badge {
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent);
+            color: #0a0a0f;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.4rem 0.8rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .work-count {
+            bottom: 1rem;
+            right: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: rgba(10, 10, 15, 0.72);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--line-strong);
+            color: var(--ink);
+            font-size: 0.78rem;
+            padding: 0.35rem 0.75rem;
+        }
+
+        body[dir="rtl"] .work-badge {
+            left: auto;
+            right: 1rem;
+        }
+
+        body[dir="rtl"] .work-count {
+            right: auto;
+            left: 1rem;
+        }
+
         .work-body {
             padding: 1.6rem 1.8rem 1.9rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
         }
 
         .work-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.45rem;
-            margin-bottom: 0.9rem;
         }
 
         .work-tag {
@@ -1450,6 +1640,16 @@
             background: var(--accent-dim);
             border-radius: 40px;
             padding: 0.3rem 0.8rem;
+        }
+
+        .work-platforms {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            flex-shrink: 0;
+            padding-top: 0.15rem;
+            color: var(--muted);
+            font-size: 1rem;
         }
 
         .work-body h3 {
@@ -1467,7 +1667,42 @@
             color: var(--muted);
             font-size: 0.95rem;
             line-height: 1.7;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .work-highlights {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.6rem 1.2rem;
+            margin: -0.2rem 0 1.7rem;
+        }
+
+        .work-highlights li {
+            position: relative;
+            padding-inline-start: 1.3rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .work-highlights li::before {
+            content: '';
+            position: absolute;
+            inset-inline-start: 0;
+            top: 0.5em;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-dim);
+        }
+
+        .work-links {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.7rem 1.1rem;
         }
 
         .work-link {
@@ -1486,6 +1721,65 @@
             color: var(--accent);
             border-color: var(--accent);
             gap: 0.9rem;
+        }
+
+        body[dir="rtl"] .work-link .fa-arrow-right {
+            transform: rotate(180deg);
+        }
+
+        .store-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.42rem 0.95rem;
+            border: 1px solid var(--line-strong);
+            border-radius: 40px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink);
+            transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .store-link i {
+            font-size: 0.95rem;
+            color: var(--accent);
+        }
+
+        .store-link:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .work-more {
+            display: flex;
+            justify-content: center;
+            margin-top: 3.2rem;
+        }
+
+        .work-more[hidden] {
+            display: none;
+        }
+
+        .more-count {
+            color: var(--muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        #work-more-btn i {
+            transform: none;
+        }
+
+        #work-more-btn:hover i {
+            transform: translateY(3px);
+        }
+
+        #work-more-btn[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        #work-more-btn[aria-expanded="true"]:hover i {
+            transform: rotate(180deg) translateY(3px);
         }
 
         /* ============================================================
@@ -1680,7 +1974,7 @@
         }
 
         /* ============================================================
-           LIGHTBOX
+           LIGHTBOX / PROJECT GALLERY
         ============================================================ */
         .lightbox {
             position: fixed;
@@ -1689,9 +1983,8 @@
             backdrop-filter: blur(8px);
             z-index: 9000;
             display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 2rem;
+            overflow-y: auto;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.35s ease, visibility 0.35s ease;
@@ -1703,8 +1996,9 @@
         }
 
         .lightbox-content {
-            max-width: min(960px, 92vw);
-            transform: scale(0.9) translateY(20px);
+            width: min(1100px, 100%);
+            margin: auto;
+            transform: scale(0.94) translateY(20px);
             transition: transform 0.45s var(--ease-out-expo);
         }
 
@@ -1712,13 +2006,160 @@
             transform: scale(1) translateY(0);
         }
 
-        .lightbox-content img {
-            max-height: 72vh;
-            width: auto;
-            max-width: 100%;
+        .lb-stage {
+            position: relative;
+            width: min(100%, calc(62vh * 1.6));
+            aspect-ratio: 16/10;
             margin: 0 auto;
             border-radius: 14px;
+            overflow: hidden;
             border: 1px solid var(--line-strong);
+            background: var(--bg-card);
+            touch-action: pan-y;
+        }
+
+        .lb-stage img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lb-stage img.is-in {
+            animation: lb-in 0.5s var(--ease-out-expo);
+        }
+
+        @keyframes lb-in {
+            from {
+                opacity: 0;
+                transform: scale(1.02);
+            }
+        }
+
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            width: 46px;
+            height: 46px;
+            margin-top: -23px;
+            border-radius: 50%;
+            border: 1px solid var(--line-strong);
+            background: rgba(10, 10, 15, 0.72);
+            backdrop-filter: blur(8px);
+            color: var(--ink);
+            font-size: 1rem;
+            z-index: 2;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+                transform 0.45s var(--ease-spring);
+        }
+
+        .lb-nav:hover {
+            background: var(--accent);
+            color: #0a0a0f;
+            border-color: var(--accent);
+        }
+
+        .lb-nav:active {
+            transform: scale(0.9);
+        }
+
+        .lb-prev {
+            left: 1rem;
+        }
+
+        .lb-next {
+            right: 1rem;
+        }
+
+        body[dir="rtl"] .lb-prev {
+            left: auto;
+            right: 1rem;
+        }
+
+        body[dir="rtl"] .lb-next {
+            right: auto;
+            left: 1rem;
+        }
+
+        body[dir="rtl"] .lb-nav i {
+            transform: rotate(180deg);
+        }
+
+        .lb-counter {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+            padding: 0.3rem 0.75rem;
+            border-radius: 40px;
+            background: rgba(10, 10, 15, 0.72);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--line-strong);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
+        }
+
+        body[dir="rtl"] .lb-counter {
+            left: auto;
+            right: 1rem;
+        }
+
+        .lb-thumbs {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            padding: 0.2rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .lb-thumbs::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* auto margins centre the strip but still let it scroll when it overflows */
+        .lb-thumb:first-child {
+            margin-inline-start: auto;
+        }
+
+        .lb-thumb:last-child {
+            margin-inline-end: auto;
+        }
+
+        .lb-thumb {
+            flex: 0 0 auto;
+            width: 84px;
+            aspect-ratio: 16/10;
+            padding: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1.5px solid var(--line-strong);
+            background: var(--bg-card);
+            opacity: 0.5;
+            transition: opacity 0.3s ease, border-color 0.3s ease;
+        }
+
+        .lb-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .lb-thumb:hover {
+            opacity: 0.85;
+        }
+
+        .lb-thumb.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .lightbox.single .lb-nav,
+        .lightbox.single .lb-counter,
+        .lightbox.single .lb-thumbs {
+            display: none;
         }
 
         .lightbox-info {
@@ -1727,22 +2168,36 @@
         }
 
         .lightbox-info h3 {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             margin-bottom: 0.3rem;
         }
 
         .lightbox-info p {
             color: var(--muted);
             font-size: 0.95rem;
-            max-width: 560px;
+            max-width: 640px;
             margin: 0 auto;
+        }
+
+        .lb-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.7rem 1.1rem;
+            margin-top: 1.1rem;
+        }
+
+        .lb-links:empty {
+            display: none;
         }
 
         .lightbox-close {
             position: fixed;
             top: 1.6rem;
             right: 2rem;
-            background: transparent;
+            z-index: 3;
+            background: rgba(10, 10, 15, 0.6);
             border: 1px solid var(--line-strong);
             color: var(--ink);
             width: 48px;
@@ -1798,6 +2253,20 @@
             .srv-arrow {
                 grid-row: 1;
             }
+
+            .work-card.is-featured {
+                display: flex;
+            }
+
+            .work-card.is-featured .work-media {
+                aspect-ratio: 16/10;
+                height: auto;
+                min-height: 0;
+            }
+
+            .work-card.is-featured .work-body {
+                padding: 1.8rem 1.8rem 2rem;
+            }
         }
 
         @media (max-width: 860px) {
@@ -1846,6 +2315,16 @@
 
             .work-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .lightbox {
+                padding: 5rem 1rem 1.5rem;
+            }
+
+            .lightbox-close {
+                top: 1rem;
+                right: 1rem;
             }
 
             .contact-cards {
@@ -1895,6 +2374,50 @@
                 right: 1.2rem;
                 width: 46px;
                 height: 46px;
+            }
+
+            .work-body,
+            .work-card.is-featured .work-body {
+                padding: 1.4rem 1.3rem 1.6rem;
+            }
+
+            .work-top {
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+
+            .work-highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-btn {
+                font-size: 0.85rem;
+            }
+
+            .lb-nav {
+                width: 40px;
+                height: 40px;
+                margin-top: -20px;
+            }
+
+            .lb-prev {
+                left: 0.6rem;
+            }
+
+            .lb-next {
+                right: 0.6rem;
+            }
+
+            body[dir="rtl"] .lb-prev {
+                right: 0.6rem;
+            }
+
+            body[dir="rtl"] .lb-next {
+                left: 0.6rem;
+            }
+
+            .lb-thumb {
+                width: 64px;
             }
         }
 
@@ -2068,7 +2591,7 @@
             <div class="about-grid">
                 <div class="about-photo reveal">
                     <div class="frame">
-                        <img src="img/my-photo.png" alt="Ahmad Albarghash - Software Engineer" loading="lazy">
+                        <img src="img/my-photo.webp" alt="Ahmad Albarghash - Software Engineer" width="720" height="1279" loading="lazy" decoding="async">
                     </div>
                     <span class="about-badge" data-en="4+ Years Experience" data-ar="خبرة +4 سنوات">4+ Years
                         Experience</span>
@@ -2330,106 +2853,233 @@
                 <span class="sec-num">04</span>
                 <h2 class="sec-title" data-en="Selected Work" data-ar="أعمال مختارة">Selected Work</h2>
             </div>
-            <p class="sec-sub reveal" data-en="Check out my recent projects" data-ar="اطلع على أحدث مشاريعي">Check out
-                my recent projects</p>
+            <p class="sec-sub reveal" data-en="Live products I've designed, built and shipped — tap any project to browse its screens."
+                data-ar="منتجات حيّة صممتها وبنيتها وأطلقتها — اضغط على أي مشروع لتصفح شاشاته.">Live products I've
+                designed, built and shipped — tap any project to browse its screens.</p>
 
-            <div class="filters reveal" role="tablist" aria-label="Portfolio filters">
-                <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" data-en="All"
-                    data-ar="الكل">All</button>
-                <button class="filter-btn" data-filter="mobile" role="tab" aria-selected="false" data-en="Mobile"
-                    data-ar="هاتف">Mobile</button>
-                <button class="filter-btn" data-filter="web" role="tab" aria-selected="false" data-en="Web"
-                    data-ar="ويب">Web</button>
-                <button class="filter-btn" data-filter="automation" role="tab" aria-selected="false"
-                    data-en="Automation" data-ar="أتمتة">Automation</button>
+            <div class="filters reveal" role="group" aria-label="Portfolio filters">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true"><span data-en="All"
+                        data-ar="الكل">All</span><span class="filter-count"></span></button>
+                <button class="filter-btn" data-filter="mobile" aria-pressed="false"><span data-en="Mobile"
+                        data-ar="هاتف">Mobile</span><span class="filter-count"></span></button>
+                <button class="filter-btn" data-filter="web" aria-pressed="false"><span data-en="Web"
+                        data-ar="ويب">Web</span><span class="filter-count"></span></button>
+                <button class="filter-btn" data-filter="ai" aria-pressed="false"><span data-en="AI &amp; Automation"
+                        data-ar="الذكاء الاصطناعي والأتمتة">AI &amp; Automation</span><span
+                        class="filter-count"></span></button>
             </div>
 
             <div class="work-grid reveal-stagger" id="work-grid">
-                <!-- Infinity Academy -->
-                <article class="work-card" data-category="web mobile" style="--i:0">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/infinity.png" alt="Infinity Academy School Management System" loading="lazy">
-                        <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                <!-- Smart Budget (featured) -->
+                <article class="work-card is-featured" data-category="mobile" style="--i:0"
+                    data-gallery="img/projects/smart-budget-1.webp, img/projects/smart-budget-2.webp, img/projects/smart-budget-3.webp, img/projects/smart-budget-4.webp">
+                    <button type="button" class="work-media" aria-label="Open Smart Budget screenshots">
+                        <img src="img/projects/smart-budget-1.webp" alt="Smart Budget personal finance app"
+                            width="1280" height="800" loading="lazy" decoding="async">
+                        <span class="work-badge" data-en="New" data-ar="جديد">New</span>
+                        <span class="work-count"><i class="far fa-images" aria-hidden="true"></i>4</span>
+                        <span class="view-pill" data-en="View Gallery" data-ar="عرض الصور">View Gallery</span>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">Laravel</span>
-                            <span class="work-tag">MySQL</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Dart</span>
+                                <span class="work-tag">Cloud Sync</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                            </span>
                         </div>
-                        <h3 data-en="Infinity Academy" data-ar="أكاديمية إنفينيتي">Infinity Academy</h3>
-                        <p data-en="Complete school management system with mobile apps, desktop app, admin panel, and web portals."
-                            data-ar="نظام إدارة مدرسة كامل مع تطبيقات الهاتف وتطبيق سطح المكتب ولوحة التحكم ومواقع الويب.">
-                            Complete school management system with mobile apps, desktop app, admin panel, and web
-                            portals.</p>
-                        <a href="https://infinityschools.academy/" class="work-link" target="_blank"
-                            rel="noopener noreferrer">
-                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <h3>Smart Budget</h3>
+                        <p data-en="Personal finance app to track spending, set budgets and savings goals, manage debts and bills, and save together with Jameya groups — offline-first, with cloud backup and 11 languages."
+                            data-ar="تطبيق لإدارة المال الشخصي: تتبّع المصاريف، ميزانيات وأهداف ادخار، إدارة الديون والفواتير، والادخار الجماعي عبر الجمعيات — يعمل دون إنترنت مع نسخ احتياطي سحابي و11 لغة.">
+                            Personal finance app to track spending, set budgets and savings goals, manage debts and
+                            bills, and save together with Jameya groups — offline-first, with cloud backup and 11
+                            languages.</p>
+                        <ul class="work-highlights">
+                            <li data-en="Budgets, goals, debts &amp; bills" data-ar="ميزانيات وأهداف وديون وفواتير">
+                                Budgets, goals, debts &amp; bills</li>
+                            <li data-en="Jameya group savings" data-ar="جمعيات ادخار جماعية">Jameya group savings</li>
+                            <li data-en="Offline-first + cloud backup" data-ar="يعمل دون إنترنت + نسخ سحابي">
+                                Offline-first + cloud backup</li>
+                            <li data-en="11 languages, full RTL" data-ar="11 لغة مع دعم كامل للعربية">11 languages,
+                                full RTL</li>
+                        </ul>
+                        <div class="work-links">
+                            <a href="https://ahmadalbarghash.tech/smart/" class="work-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.techquestcore.smartbudget"
+                                class="store-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-google-play" aria-hidden="true"></i>Google Play
+                            </a>
+                        </div>
                     </div>
                 </article>
 
-                <!-- BookNawa -->
-                <article class="work-card" data-category="mobile" style="--i:1">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/booknawa.png" alt="BookNawa Arabic Book Reading App" loading="lazy">
-                        <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                <!-- Atqin -->
+                <article class="work-card" data-category="mobile web" style="--i:1"
+                    data-gallery="img/projects/atqin-1.webp, img/projects/atqin-2.webp, img/projects/atqin-3.webp, img/projects/atqin-4.webp, img/projects/atqin-5.webp">
+                    <button type="button" class="work-media" aria-label="Open Atqin screenshots">
+                        <img src="img/projects/atqin-1.webp" alt="Atqin Quran memorization and recitation app"
+                            width="1280" height="800" loading="lazy" decoding="async">
+                        <span class="work-badge" data-en="New" data-ar="جديد">New</span>
+                        <span class="work-count"><i class="far fa-images" aria-hidden="true"></i>5</span>
+                        <span class="view-pill" data-en="View Gallery" data-ar="عرض الصور">View Gallery</span>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">GetX</span>
-                            <span class="work-tag">Laravel</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Flutter Web</span>
+                                <span class="work-tag">PWA</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android, iOS, Web">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                                <i class="fab fa-apple" aria-hidden="true"></i>
+                                <i class="fas fa-globe" aria-hidden="true"></i>
+                            </span>
                         </div>
-                        <h3 data-en="BookNawa" data-ar="بوك نوا">BookNawa</h3>
-                        <p data-en="Arabic book reading platform with extensive digital library and personalized learning experiences."
-                            data-ar="منصة قراءة الكتب العربية مع مكتبة رقمية واسعة وتجارب تعلم مخصصة.">
-                            Arabic book reading platform with extensive digital library and personalized learning
-                            experiences.</p>
-                        <a href="https://booknawa.com/" class="work-link" target="_blank" rel="noopener noreferrer">
-                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <h3 data-en="Atqin" data-ar="أتقن">Atqin</h3>
+                        <p data-en="Quran companion for memorization and recitation: a page-accurate Madani Mushaf, voice-checked memorization with spaced review, every reciter with lock-screen &amp; Android Auto playback, plus hadith, adhkar and prayer times."
+                            data-ar="رفيقك لحفظ القرآن وتلاوته ومراجعته: مصحف بصفحات المصحف المدني، وحفظ تُكشف فيه الآيات بصوتك مع مراجعة متباعدة، واستماع لكل القرّاء من شاشة القفل والسيارة، والحديث والأذكار والمواقيت.">
+                            Quran companion for memorization and recitation: a page-accurate Madani Mushaf,
+                            voice-checked memorization with spaced review, every reciter with lock-screen &amp;
+                            Android Auto playback, plus hadith, adhkar and prayer times.</p>
+                        <div class="work-links">
+                            <a href="https://atqin-app.web.app/" class="work-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://atqin-app.web.app/app/" class="store-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fas fa-globe" aria-hidden="true"></i><span data-en="Web App"
+                                    data-ar="تطبيق الويب">Web App</span>
+                            </a>
+                            <a href="https://atqin-app.web.app/download/atqin.apk" class="store-link"
+                                rel="noopener noreferrer">
+                                <i class="fab fa-android" aria-hidden="true"></i><span data-en="Android APK"
+                                    data-ar="أندرويد APK">Android APK</span>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
-                <!-- TraderCoreAI -->
-                <article class="work-card" data-category="web automation" style="--i:2">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/tradercore.png" alt="TraderCoreAI Trading Platform" loading="lazy">
-                        <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                <!-- Book Nawa -->
+                <article class="work-card" data-category="mobile ai" style="--i:2"
+                    data-gallery="img/projects/booknawa-1.webp, img/projects/booknawa-2.webp, img/projects/booknawa-3.webp, img/projects/booknawa-4.webp">
+                    <button type="button" class="work-media" aria-label="Open Book Nawa screenshots">
+                        <img src="img/projects/booknawa-1.webp" alt="Book Nawa audio book summaries app"
+                            width="1280" height="800" loading="lazy" decoding="async">
+                        <span class="work-count"><i class="far fa-images" aria-hidden="true"></i>4</span>
+                        <span class="view-pill" data-en="View Gallery" data-ar="عرض الصور">View Gallery</span>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">AI</span>
-                            <span class="work-tag">PHP</span>
-                            <span class="work-tag">MySQL</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Laravel</span>
+                                <span class="work-tag">AI</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                            </span>
                         </div>
-                        <h3>TraderCoreAI</h3>
-                        <p data-en="AI-powered trading analysis platform with 95% accuracy, real-time insights, and risk management."
-                            data-ar="منصة تحليل تداول مدعومة بالذكاء الاصطناعي بدقة 95% ورؤى فورية وإدارة المخاطر.">
-                            AI-powered trading analysis platform with 95% accuracy, real-time insights, and risk
-                            management.</p>
-                        <a href="https://booknawa.com/ai/" class="work-link" target="_blank" rel="noopener noreferrer">
-                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <h3 data-en="Book Nawa" data-ar="بوك نوا">Book Nawa</h3>
+                        <p data-en="Audio book-summary app in Arabic and English: narrated key ideas, flashcards and quizzes, streaks and certificates — plus “Ask the book”, AI answers grounded in each book's chapters."
+                            data-ar="تطبيق ملخصات كتب صوتية بالعربية والإنجليزية: أفكار رئيسية مسموعة، بطاقات تعليمية واختبارات، سلاسل يومية وشهادات — مع ميزة «اسأل الكتاب» بإجابات ذكية مستندة إلى فصول الكتاب.">
+                            Audio book-summary app in Arabic and English: narrated key ideas, flashcards and quizzes,
+                            streaks and certificates — plus “Ask the book”, AI answers grounded in each book's
+                            chapters.</p>
+                        <div class="work-links">
+                            <a href="https://booknawa.com/" class="work-link" target="_blank" rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.techquestcore.booknawa"
+                                class="store-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-google-play" aria-hidden="true"></i>Google Play
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Infinity Academy Schools -->
+                <article class="work-card" data-category="mobile web" style="--i:3"
+                    data-gallery="img/projects/infinity-1.webp, img/projects/infinity-2.webp, img/projects/infinity-3.webp, img/projects/infinity-4.webp">
+                    <button type="button" class="work-media" aria-label="Open Infinity Academy Schools screenshots">
+                        <img src="img/projects/infinity-1.webp" alt="Infinity Academy Schools platform and apps"
+                            width="1280" height="800" loading="lazy" decoding="async">
+                        <span class="work-count"><i class="far fa-images" aria-hidden="true"></i>4</span>
+                        <span class="view-pill" data-en="View Gallery" data-ar="عرض الصور">View Gallery</span>
+                    </button>
+                    <div class="work-body">
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Laravel</span>
+                                <span class="work-tag">MySQL</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android, iOS, Web, Desktop">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                                <i class="fab fa-apple" aria-hidden="true"></i>
+                                <i class="fas fa-globe" aria-hidden="true"></i>
+                                <i class="fas fa-desktop" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <h3 data-en="Infinity Academy Schools" data-ar="مدارس أكاديمية انفينيتي">Infinity Academy Schools
+                        </h3>
+                        <p data-en="Complete digital platform for a Jordanian school: student, parent and school apps on Android, iOS, desktop and web — homework, quizzes, attendance, certified grades and an AI study assistant."
+                            data-ar="منصة رقمية متكاملة لمدرسة أردنية: تطبيقات للطلاب وأولياء الأمور والمدرسة على أندرويد وiOS وسطح المكتب والويب — واجبات واختبارات وحضور وعلامات معتمدة ومساعد دراسي ذكي.">
+                            Complete digital platform for a Jordanian school: student, parent and school apps on
+                            Android, iOS, desktop and web — homework, quizzes, attendance, certified grades and an AI
+                            study assistant.</p>
+                        <div class="work-links">
+                            <a href="https://infinityschools.academy/infinity/index.html" class="work-link"
+                                target="_blank" rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.infinityschool.acamedy"
+                                class="store-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-google-play" aria-hidden="true"></i>Google Play
+                            </a>
+                            <a href="https://apps.apple.com/app/infinity-academy-schools/id6670254324"
+                                class="store-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-app-store-ios" aria-hidden="true"></i>App Store
+                            </a>
+                            <a href="https://infinityschools.academy/infinity/web/" class="store-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fas fa-globe" aria-hidden="true"></i><span data-en="Web App"
+                                    data-ar="تطبيق الويب">Web App</span>
+                            </a>
+                            <a href="https://infinityschools.academy/infinity/desktop.php" class="store-link"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-desktop" aria-hidden="true"></i><span data-en="Desktop"
+                                    data-ar="سطح المكتب">Desktop</span>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- n8n Automation -->
-                <article class="work-card" data-category="automation" style="--i:3">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/n8n-project.jpg" alt="n8n Automation Project" loading="lazy"
-                            onerror="this.style.display='none'">
+                <article class="work-card" data-category="ai" style="--i:4">
+                    <button type="button" class="work-media" aria-label="Open n8n workflow automation preview">
+                        <img src="img/projects/n8n-1.webp" alt="n8n workflow connecting a webhook, AI agent, Google Sheets and WhatsApp"
+                            width="1280" height="800" loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">n8n</span>
-                            <span class="work-tag">API</span>
-                            <span class="work-tag">Automation</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">n8n</span>
+                                <span class="work-tag">AI Agents</span>
+                                <span class="work-tag">APIs</span>
+                            </div>
                         </div>
                         <h3 data-en="n8n Workflow Automation" data-ar="أتمتة سير العمل n8n">n8n Workflow Automation
                         </h3>
@@ -2437,74 +3087,97 @@
                             data-ar="سير عمل أتمتة معقدة باستخدام n8n لتبسيط العمليات التجارية ودمج واجهات برمجة التطبيقات وأتمتة المهام المتكررة.">
                             Complex automation workflows using n8n to streamline business processes, integrate APIs,
                             and automate repetitive tasks.</p>
-                        <a href="#contact" class="work-link">
-                            <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="#contact" class="work-link">
+                                <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Blast Grid -->
-                <article class="work-card" data-category="mobile" style="--i:4">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/work_8.jpeg" alt="Blast Grid Game" loading="lazy"
-                            onerror="this.style.display='none'">
+                <article class="work-card" data-category="mobile" style="--i:5">
+                    <button type="button" class="work-media is-icon" aria-label="Open Blast Grid artwork">
+                        <img src="img/projects/blast-grid-1.webp" alt="Blast Grid block puzzle game" width="720"
+                            height="720" loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">Dart</span>
-                            <span class="work-tag">Game</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Dart</span>
+                                <span class="work-tag">Game</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                            </span>
                         </div>
                         <h3 data-en="Blast Grid" data-ar="بلاست جريد">Blast Grid</h3>
                         <p data-en="A free block puzzle game where you place shapes, clear lines, and build satisfying combo scores. Offline fun with smooth, addictive gameplay."
                             data-ar="لعبة ألغاز مكعبات مجانية حيث تضع الأشكال، تمسح الصفوف والأعمدة، وتبني نقاط كومبو مُرضية. متعة أوفلاين مع أسلوب لعب سلس وممتع.">
                             A free block puzzle game where you place shapes, clear lines, and build satisfying combo
                             scores. Offline fun with smooth, addictive gameplay.</p>
-                        <a href="https://play.google.com/store/apps/details?id=com.techquestcore.blastgrid"
-                            class="work-link" target="_blank" rel="noopener noreferrer">
-                            <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
-                            <i class="fab fa-google-play" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="https://play.google.com/store/apps/details?id=com.techquestcore.blastgrid"
+                                class="work-link" target="_blank" rel="noopener noreferrer">
+                                <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
+                                <i class="fab fa-google-play" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Play Store Apps -->
-                <article class="work-card" data-category="mobile" style="--i:5">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/playstore.png" alt="Google Play Store Portfolio" loading="lazy">
+                <article class="work-card" data-category="mobile" style="--i:6">
+                    <button type="button" class="work-media is-icon" aria-label="Open Play Store apps preview">
+                        <img src="img/projects/playstore-1.webp" alt="Google Play Store developer page" width="512"
+                            height="512" loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">Dart</span>
-                            <span class="work-tag">Firebase</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Dart</span>
+                                <span class="work-tag">Firebase</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Android">
+                                <i class="fab fa-android" aria-hidden="true"></i>
+                            </span>
                         </div>
                         <h3 data-en="Play Store Apps" data-ar="تطبيقات المتجر">Play Store Apps</h3>
                         <p data-en="Collection of published mobile applications available on Google Play Store."
                             data-ar="مجموعة من تطبيقات الهاتف المنشورة في متجر Google Play.">
                             Collection of published mobile applications available on Google Play Store.</p>
-                        <a href="https://play.google.com/store/apps/dev?id=7634674187641841884" class="work-link"
-                            target="_blank" rel="noopener noreferrer">
-                            <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
-                            <i class="fab fa-google-play" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="https://play.google.com/store/apps/dev?id=7634674187641841884" class="work-link"
+                                target="_blank" rel="noopener noreferrer">
+                                <span data-en="View on Play Store" data-ar="عرض في المتجر">View on Play Store</span>
+                                <i class="fab fa-google-play" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rafee Metal -->
-                <article class="work-card" data-category="web" style="--i:6">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/rafee.png" alt="Rafee Metal Industries Website" loading="lazy">
+                <article class="work-card" data-category="web" style="--i:7">
+                    <button type="button" class="work-media is-left" aria-label="Open Rafee Metal Industries screenshot">
+                        <img src="img/projects/rafee-1.webp" alt="Rafee Metal Industries website" width="1280"
+                            height="529" loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">PHP</span>
-                            <span class="work-tag">Bootstrap</span>
-                            <span class="work-tag">MySQL</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">PHP</span>
+                                <span class="work-tag">Bootstrap</span>
+                                <span class="work-tag">MySQL</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Web">
+                                <i class="fas fa-globe" aria-hidden="true"></i>
+                            </span>
                         </div>
                         <h3 data-en="Rafee Metal Industries" data-ar="رافع للصناعات المعدنية">Rafee Metal Industries
                         </h3>
@@ -2512,108 +3185,145 @@
                             data-ar="موقع شركة تصنيع معادن مع دعم ثنائي اللغة وكتالوج المنتجات.">
                             Corporate website for metal fabrication company with bilingual support and product catalog.
                         </p>
-                        <a href="https://rafeemetal.com/" class="work-link" target="_blank" rel="noopener noreferrer">
-                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="https://rafeemetal.com/" class="work-link" target="_blank" rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- AWTIAHS -->
-                <article class="work-card" data-category="web" style="--i:7">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/awtiahs.png" alt="AWTIAHS Website" loading="lazy">
+                <article class="work-card" data-category="web" style="--i:8">
+                    <button type="button" class="work-media" aria-label="Open AWTIAHS screenshot">
+                        <img src="img/projects/awtiahs-1.webp" alt="AWTIAHS website" width="1280" height="590"
+                            loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">HTML5</span>
-                            <span class="work-tag">CSS3</span>
-                            <span class="work-tag">JavaScript</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">HTML5</span>
+                                <span class="work-tag">CSS3</span>
+                                <span class="work-tag">JavaScript</span>
+                            </div>
+                            <span class="work-platforms" role="img" aria-label="Web">
+                                <i class="fas fa-globe" aria-hidden="true"></i>
+                            </span>
                         </div>
                         <h3>AWTIAHS</h3>
                         <p data-en="Modern website for Dutch plastering and painting company with project gallery and contact system."
                             data-ar="موقع حديث لشركة جص ودهان هولندية مع معرض المشاريع ونظام الاتصال.">
                             Modern website for Dutch plastering and painting company with project gallery and contact
                             system.</p>
-                        <a href="https://awtiahs.com/" class="work-link" target="_blank" rel="noopener noreferrer">
-                            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="https://awtiahs.com/" class="work-link" target="_blank" rel="noopener noreferrer">
+                                <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- ToDo App -->
-                <article class="work-card" data-category="mobile" style="--i:8">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/work-1.jpg" alt="ToDo App" loading="lazy" onerror="this.style.display='none'">
+                <article class="work-card" data-category="mobile" style="--i:9">
+                    <button type="button" class="work-media" aria-label="Open ToDo App screenshot">
+                        <img src="img/projects/todo-1.webp" alt="ToDo App" width="1280" height="853" loading="lazy"
+                            decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">Dart</span>
-                            <span class="work-tag">SQLite</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Dart</span>
+                                <span class="work-tag">SQLite</span>
+                            </div>
                         </div>
                         <h3 data-en="ToDo App" data-ar="تطبيق المهام">ToDo App</h3>
                         <p data-en="A modern task management application built with Flutter, featuring clean UI and efficient task organization."
                             data-ar="تطبيق حديث لإدارة المهام مبني باستخدام Flutter، يتميز بواجهة مستخدم نظيفة وتنظيم فعال للمهام.">
                             A modern task management application built with Flutter, featuring clean UI and efficient
                             task organization.</p>
-                        <a href="#contact" class="work-link">
-                            <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="#contact" class="work-link">
+                                <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Movies App -->
-                <article class="work-card" data-category="mobile" style="--i:9">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/work-2.jpg" alt="Movies App" loading="lazy" onerror="this.style.display='none'">
+                <article class="work-card" data-category="mobile" style="--i:10">
+                    <button type="button" class="work-media" aria-label="Open Movies App screenshot">
+                        <img src="img/projects/movies-1.webp" alt="Movies App" width="1280" height="853"
+                            loading="lazy" decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">REST API</span>
-                            <span class="work-tag">TMDB</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">REST API</span>
+                                <span class="work-tag">TMDB</span>
+                            </div>
                         </div>
                         <h3 data-en="Movies App" data-ar="تطبيق الأفلام">Movies App</h3>
                         <p data-en="Entertainment application showcasing movies with rich UI, search functionality, and detailed movie information."
                             data-ar="تطبيق ترفيهي يعرض الأفلام بواجهة مستخدم غنية ووظيفة بحث ومعلومات تفصيلية عن الأفلام.">
                             Entertainment application showcasing movies with rich UI, search functionality, and
                             detailed movie information.</p>
-                        <a href="#contact" class="work-link">
-                            <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="#contact" class="work-link">
+                                <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Meals App -->
-                <article class="work-card" data-category="mobile" style="--i:10">
-                    <div class="work-media" data-lightbox="true">
-                        <img src="img/work-4.jpg" alt="Meals App" loading="lazy" onerror="this.style.display='none'">
+                <article class="work-card" data-category="mobile" style="--i:11">
+                    <button type="button" class="work-media" aria-label="Open Meals App screenshot">
+                        <img src="img/projects/meals-1.webp" alt="Meals App" width="1280" height="853" loading="lazy"
+                            decoding="async">
                         <span class="view-pill" data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
-                    </div>
+                    </button>
                     <div class="work-body">
-                        <div class="work-tags">
-                            <span class="work-tag">Flutter</span>
-                            <span class="work-tag">Dart</span>
-                            <span class="work-tag">Provider</span>
+                        <div class="work-top">
+                            <div class="work-tags">
+                                <span class="work-tag">Flutter</span>
+                                <span class="work-tag">Dart</span>
+                                <span class="work-tag">Provider</span>
+                            </div>
                         </div>
                         <h3 data-en="Meals App" data-ar="تطبيق الوجبات">Meals App</h3>
                         <p data-en="Recipe and meal planning application with category browsing, favorites, and detailed cooking instructions."
                             data-ar="تطبيق الوصفات وتخطيط الوجبات مع تصفح الفئات والمفضلة وتعليمات الطهي التفصيلية.">
                             Recipe and meal planning application with category browsing, favorites, and detailed
                             cooking instructions.</p>
-                        <a href="#contact" class="work-link">
-                            <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="work-links">
+                            <a href="#contact" class="work-link">
+                                <span data-en="Request Similar" data-ar="اطلب مشروعًا مشابهًا">Request Similar</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </article>
+            </div>
+
+            <div class="work-more" id="work-more">
+                <button type="button" class="btn btn-ghost" id="work-more-btn" aria-controls="work-grid"
+                    aria-expanded="false">
+                    <span class="more-label-show" data-en="Show more projects" data-ar="عرض المزيد من المشاريع">Show
+                        more projects</span>
+                    <span class="more-label-less" data-en="Show fewer projects" data-ar="عرض مشاريع أقل" hidden>Show
+                        fewer projects</span>
+                    <span class="more-count" id="work-more-count"></span>
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </button>
             </div>
         </section>
 
@@ -2693,15 +3403,25 @@
     <button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"
             aria-hidden="true"></i></button>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+    <!-- Lightbox / project gallery -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title"
+        aria-hidden="true">
         <button class="lightbox-close" id="lightbox-close" aria-label="Close preview"><i class="fas fa-times"
                 aria-hidden="true"></i></button>
         <div class="lightbox-content">
-            <img src="" alt="" id="lightbox-img">
+            <div class="lb-stage" id="lb-stage">
+                <img alt="" id="lightbox-img" width="1280" height="800">
+                <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous screenshot"><i
+                        class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                <button class="lb-nav lb-next" id="lb-next" aria-label="Next screenshot"><i
+                        class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                <span class="lb-counter" id="lb-counter" aria-live="polite"></span>
+            </div>
+            <div class="lb-thumbs" id="lb-thumbs"></div>
             <div class="lightbox-info">
                 <h3 id="lightbox-title"></h3>
                 <p id="lightbox-desc"></p>
+                <div class="lb-links" id="lb-links"></div>
             </div>
         </div>
     </div>
@@ -2999,6 +3719,8 @@
         // ============================================================
         // SCROLL REVEALS
         // ============================================================
+        // Tall blocks (e.g. the stacked work grid on phones) can never reach a ratio threshold,
+        // so reveal once the top edge is 10% inside the viewport instead
         const io = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
@@ -3018,7 +3740,7 @@
 
                 io.unobserve(entry.target);
             });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
 
         document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
 
@@ -3107,62 +3829,209 @@
         });
 
         // ============================================================
-        // WORK FILTERS
+        // WORK FILTERS + SHOW MORE
         // ============================================================
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const workCards = document.querySelectorAll('.work-card');
+        const workCards = [...document.querySelectorAll('.work-card')];
+        const workMore = document.getElementById('work-more');
+        const workMoreBtn = document.getElementById('work-more-btn');
+        const workMoreCount = document.getElementById('work-more-count');
+        const WORK_LIMIT = 9; // featured card + four rows of two
+        let activeFilter = 'all';
+        let workExpanded = false;
+
+        const cardMatches = (card, filter) =>
+            filter === 'all' || card.dataset.category.split(/\s+/).includes(filter);
+
+        filterBtns.forEach(btn => {
+            btn.querySelector('.filter-count').textContent =
+                workCards.filter(card => cardMatches(card, btn.dataset.filter)).length;
+        });
+
+        // animate: 'all' re-plays every visible card, 'new' only cards that were hidden
+        function applyWorkFilter(animate) {
+            let matched = 0;
+            let popped = 0;
+            workCards.forEach(card => {
+                const match = cardMatches(card, activeFilter);
+                if (match) matched++;
+                const visible = match && (workExpanded || matched <= WORK_LIMIT);
+                const wasHidden = card.classList.contains('hidden');
+                card.classList.toggle('hidden', !visible);
+                card.classList.remove('pop');
+
+                if (visible && (animate === 'all' || (animate === 'new' && wasHidden))) {
+                    void card.offsetWidth; // restart animation
+                    card.style.setProperty('--pop-delay', Math.min(popped++, 8) * 60 + 'ms');
+                    card.classList.add('pop');
+                }
+            });
+
+            const extra = matched - WORK_LIMIT;
+            workMore.hidden = extra <= 0;
+            workMoreCount.textContent = workExpanded ? '' : '(' + extra + ')';
+            workMoreBtn.setAttribute('aria-expanded', workExpanded);
+            workMoreBtn.querySelector('.more-label-show').hidden = workExpanded;
+            workMoreBtn.querySelector('.more-label-less').hidden = !workExpanded;
+        }
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                if (btn.dataset.filter === activeFilter) return;
                 filterBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
+                    b.classList.toggle('active', b === btn);
+                    b.setAttribute('aria-pressed', b === btn);
                 });
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-
-                const filter = btn.dataset.filter;
-                workCards.forEach(card => {
-                    const match = filter === 'all' || card.dataset.category.includes(filter);
-                    card.classList.toggle('hidden', !match);
-                });
+                activeFilter = btn.dataset.filter;
+                applyWorkFilter('all');
             });
         });
 
+        workMoreBtn.addEventListener('click', () => {
+            workExpanded = !workExpanded;
+            applyWorkFilter('new');
+            if (!workExpanded) {
+                workMoreBtn.scrollIntoView({ block: 'center', behavior: reducedMotion ? 'auto' : 'smooth' });
+            }
+        });
+
+        applyWorkFilter(false);
+
         // ============================================================
-        // LIGHTBOX
+        // PROJECT GALLERY LIGHTBOX
         // ============================================================
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxTitle = document.getElementById('lightbox-title');
         const lightboxDesc = document.getElementById('lightbox-desc');
         const lightboxClose = document.getElementById('lightbox-close');
+        const lbStage = document.getElementById('lb-stage');
+        const lbPrev = document.getElementById('lb-prev');
+        const lbNext = document.getElementById('lb-next');
+        const lbCounter = document.getElementById('lb-counter');
+        const lbThumbs = document.getElementById('lb-thumbs');
+        const lbLinks = document.getElementById('lb-links');
+        let gallery = [];
+        let galleryIdx = 0;
+        let lastFocus = null;
 
-        document.querySelectorAll('.work-media[data-lightbox="true"]').forEach(media => {
-            media.addEventListener('click', () => {
-                const img = media.querySelector('img');
-                if (!img || img.style.display === 'none') return;
-                const card = media.closest('.work-card');
-                lightboxImg.src = img.src;
-                lightboxImg.alt = img.alt;
-                lightboxTitle.textContent = card.querySelector('h3').textContent;
-                lightboxDesc.textContent = card.querySelector('.work-body p').textContent;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+        function openGallery(card) {
+            const cover = card.querySelector('.work-media img');
+            gallery = (card.dataset.gallery || cover.getAttribute('src'))
+                .split(',').map(src => src.trim()).filter(Boolean);
 
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
+            lightboxTitle.textContent = card.querySelector('h3').textContent.trim();
+            lightboxDesc.textContent = card.querySelector('.work-body p').textContent.trim();
+            lbLinks.replaceChildren(...[...card.querySelectorAll('.work-links a')].map(a => a.cloneNode(true)));
+
+            const shotLabel = document.body.dir === 'rtl' ? 'صورة ' : 'Screenshot ';
+            lbThumbs.replaceChildren(...gallery.map((src, i) => {
+                const thumb = document.createElement('button');
+                thumb.type = 'button';
+                thumb.className = 'lb-thumb';
+                thumb.setAttribute('aria-label', shotLabel + (i + 1));
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = '';
+                thumb.appendChild(img);
+                thumb.addEventListener('click', () => showSlide(i));
+                return thumb;
+            }));
+
+            lightbox.classList.toggle('single', gallery.length < 2);
+            showSlide(0);
+
+            lastFocus = document.activeElement;
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            lightboxClose.focus({ preventScroll: true });
         }
 
+        function showSlide(i) {
+            const n = gallery.length;
+            galleryIdx = (i + n) % n;
+
+            lightboxImg.classList.remove('is-in');
+            void lightboxImg.offsetWidth; // restart fade
+            lightboxImg.src = gallery[galleryIdx];
+            lightboxImg.alt = lightboxTitle.textContent + ' — ' + (galleryIdx + 1) + ' / ' + n;
+            lightboxImg.classList.add('is-in');
+            lbCounter.textContent = (galleryIdx + 1) + ' / ' + n;
+
+            [...lbThumbs.children].forEach((thumb, k) => {
+                thumb.classList.toggle('active', k === galleryIdx);
+                thumb.setAttribute('aria-current', k === galleryIdx ? 'true' : 'false');
+            });
+            lbThumbs.children[galleryIdx]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+
+            if (n > 1) new Image().src = gallery[(galleryIdx + 1) % n]; // warm the next slide
+        }
+
+        function closeLightbox() {
+            if (!lightbox.classList.contains('active')) return;
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocus) lastFocus.focus({ preventScroll: true });
+        }
+
+        document.querySelectorAll('.work-media').forEach(media => {
+            media.addEventListener('click', () => openGallery(media.closest('.work-card')));
+        });
+
+        lbPrev.addEventListener('click', () => showSlide(galleryIdx - 1));
+        lbNext.addEventListener('click', () => showSlide(galleryIdx + 1));
         lightboxClose.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
+
+        // In-page links copied into the gallery (e.g. "Request Similar") close it before scrolling
+        lbLinks.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+            e.preventDefault();
+            closeLightbox();
+            document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Swipe between screenshots on touch screens
+        let touchX = null;
+        lbStage.addEventListener('touchstart', (e) => {
+            touchX = e.touches[0].clientX;
+        }, { passive: true });
+        lbStage.addEventListener('touchend', (e) => {
+            if (touchX === null || gallery.length < 2) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            touchX = null;
+            if (Math.abs(dx) < 45) return;
+            const forward = document.body.dir === 'rtl' ? dx > 0 : dx < 0;
+            showSlide(galleryIdx + (forward ? 1 : -1));
+        });
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            if (!lightbox.classList.contains('active')) return;
+
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && gallery.length > 1) {
+                const forward = (e.key === 'ArrowRight') !== (document.body.dir === 'rtl');
+                showSlide(galleryIdx + (forward ? 1 : -1));
+            } else if (e.key === 'Tab') {
+                // keep keyboard focus inside the dialog
+                const focusables = [...lightbox.querySelectorAll('button, a[href]')]
+                    .filter(el => el.getClientRects().length > 0);
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
         });
 
         // ============================================================
